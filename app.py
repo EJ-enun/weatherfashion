@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from PIL import Image
+import io
 from io import BytesIO
 
 # Set up your Stable Diffusion Inference Endpoint
