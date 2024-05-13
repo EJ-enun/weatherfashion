@@ -33,11 +33,21 @@ headers = {"Authorization": "Bearer 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"}
 
 API_CLIMACELL = "OjoPt8lggqQZQQMkXwMLg2q40ZMy07dm"
 
-def fetchForecast(lat, lon, apikey):
-    url = "https://api.climacell.co/v3/weather/nowcast"
-    querystring = {"lat":lat,"lon":lon,"unit_system":"si","start_time":"now","fields":"temp,feels_like,weather_code,precipitation,precipitation_type","apikey":apikey}
-    response = requests.request("GET", url, params=querystring)
+#def fetchForecast(lat, lon, apikey):
+#    url = "https://api.climacell.co/v3/weather/nowcast"
+#    querystring = {"lat":lat,"lon":lon,"unit_system":"si","start_time":"now","fields":"temp,feels_like,weather_code,precipitation,precipitation_type","apikey":apikey}
+#    response = requests.request("GET", url, params=querystring)
+#    return response.json()
+
+def fetchForecastWeather(lat, lon, apikey):
+    url = "http://api.weatherapi.com/v1/current.json"
+    querystring = {
+        "key": apikey,
+        "q": f"{lat},{lon}",
+    }
+    response = requests.get(url, params=querystring)
     return response.json()
+
 
 def consumeOne(forecast):
     return {
