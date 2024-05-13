@@ -8,7 +8,7 @@ from opencage.geocoder import OpenCageGeocode
 st.title('Geocoding App')
 
 # Get the API key from: https://opencagedata.com
-key = 'YOUR_OPEN_CAGE_API_KEY'
+key = 'ca22f9473b824f59a109ed0e60d9e551'
 geocoder = OpenCageGeocode(key)
 
 address = st.text_input("Enter the location:")
