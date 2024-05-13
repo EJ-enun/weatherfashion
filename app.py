@@ -8,6 +8,17 @@ INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.
 
 # Your access token
 ACCESS_TOKEN = "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"
+API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
+headers = {"Authorization": "Bearer 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"}
+
+
+def query(payload):
+	response = requests.post(API_URL, headers=headers, json=payload)
+	return response.content
+image_bytes = query({
+	"inputs": "Astronaut riding a horse",
+})
+
 
 def generate_image_from_text(prompt):
     payload = {
@@ -25,13 +36,14 @@ def main():
 
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
-
+    
+    
     if st.button("Generate Image"):
         if text_prompt:
             try:
-                image_url = generate_image_from_text(text_prompt)
+                image_url = query(text_prompt)
                 response = requests.get(image_url)
-                image = Image.open(BytesIO(response.content))
+                image = Image.open(io.BytesIO(image_bytes))
                 st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
