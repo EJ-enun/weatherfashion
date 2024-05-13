@@ -30,7 +30,7 @@ def main():
                     "max_length": 256,
                 }
                 image_data = query(payload)
-                print(image_data)
+                st.write(print(image_data))
                 #image = Image.open(BytesIO(image_data))
                 #st.image(image, caption="Generated Image")
             except Exception as e:
