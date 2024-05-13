@@ -31,9 +31,9 @@ def main():
                     "num_return_sequences": 1,
                     "max_length": 256,
                 }
-                #image_data = query(payload)
+                image_data = query(payload)
                 #st.write(print(image_bytes))
-                image = Image.open(io.BytesIO(image_bytes))
+                image = Image.open(io.BytesIO(image_data))
                 #image = Image.open(BytesIO(image_data))
                 st.image(image, caption="Generated Image")
             except Exception as e:
