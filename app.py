@@ -31,7 +31,7 @@ def main():
                 }
                 image_data = query(payload)
                 print(image_data)
-                image = Image.open(BytesIO(image_data))
+                #image = Image.open(BytesIO(image_data))
                 #st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
