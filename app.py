@@ -49,14 +49,35 @@ def fetchForecastWeather(lat, lon, apikey):
     return response.json()
 
 
+#def consumeOne(forecast):
+#    return {
+#    "temp": forecast["temp"]["value"],
+#    "feel": forecast["feels_like"]["value"],
+#    "precipitation": forecast["precipitation"]["value"],
+#    "precipitation_type": forecast["precipitation_type"]["value"],
+#    "weather_code": forecast["weather_code"]["value"],
+#    }
+
+def get_precipitation_type(condition_text):
+    if "rain" in condition_text.lower():
+        return "Rain"
+    elif "snow" in condition_text.lower():
+        return "Snow"
+    else:
+        return "Unknown"
+
 def consumeOne(forecast):
+    condition_text = forecast["current"]["condition"]["text"]
+    precipitation_type = get_precipitation_type(condition_text)
     return {
-    "temp": forecast["temp"]["value"],
-    "feel": forecast["feels_like"]["value"],
-    "precipitation": forecast["precipitation"]["value"],
-    "precipitation_type": forecast["precipitation_type"]["value"],
-    "weather_code": forecast["weather_code"]["value"],
+    "temp": forecast["current"]["temp_c"],
+    "feel": forecast["current"]["feelslike_c"],
+    "precipitation": forecast["current"]["precip_mm"],
+    "precipitation_type": precipitation_type,
+    "weather_code": forecast["current"]["condition"]["code"],
     }
+
+
 
 def clothing(inp):
     umbrella = inp["is_rainy"] or inp["is_snowy"]
@@ -97,7 +118,7 @@ is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts))
 is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
 is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
 
-print(clothing({
+st.write(clothing({
     "mintemp": mintemp,
     "maxtemp": maxtemp,
     "minfeel": minfeel,
