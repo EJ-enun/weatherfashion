@@ -15,9 +15,7 @@ headers = {"Authorization": "Bearer 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"}
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.content
-image_bytes = query({
-	"inputs": "Astronaut riding a horse",
-})
+
 
 
 def generate_image_from_text(prompt):
@@ -43,7 +41,7 @@ def main():
             try:
                 image_url = query(text_prompt)
                 response = requests.get(image_url)
-                image = Image.open(io.BytesIO(image_bytes))
+                image = Image.open(requests.get(image_url, stream=True).raw)
                 st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
