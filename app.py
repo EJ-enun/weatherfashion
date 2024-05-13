@@ -16,7 +16,7 @@ def query(payload):
     return response.content
 
 def main():
-    st.title("Text-to-Image Generator with Streamlit")
+    st.title("Weather Fashion")
 
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
@@ -30,8 +30,9 @@ def main():
                     "max_length": 256,
                 }
                 image_data = query(payload)
+                print(image_data)
                 image = Image.open(BytesIO(image_data))
-                st.image(image, caption="Generated Image")
+                #st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
         else:
