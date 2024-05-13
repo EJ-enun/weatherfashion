@@ -3,6 +3,24 @@ import requests
 from PIL import Image
 import io
 from io import BytesIO
+from opencage.geocoder import OpenCageGeocode
+
+st.title('Geocoding App')
+
+# Get the API key from: https://opencagedata.com
+key = 'YOUR_OPEN_CAGE_API_KEY'
+geocoder = OpenCageGeocode(key)
+
+address = st.text_input("Enter the location:")
+
+if st.button('Get Latitude and Longitude'):
+    results = geocoder.geocode(address)
+    if results and len(results):
+        lat = results[0]['geometry']['lat']
+        lng = results[0]['geometry']['lng']
+        st.write(f'Latitude: {lat}, Longitude: {lng}')
+    else:
+        st.write('Location not found')
 
 # Set up your Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
