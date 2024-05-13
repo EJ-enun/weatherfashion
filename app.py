@@ -32,7 +32,7 @@ headers = {"Authorization": "Bearer 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"}
 
 
 def fetchForecast(lat, lon, apikey):
-	url = “https://api.climacell.co/v3/weather/nowcast"
+	url = "https://api.climacell.co/v3/weather/nowcast"
 	querystring = {“lat”:lat,”lon”:lon,”unit_system”:”si”,”start_time”:”now”,”fields”:”temp,feels_like,weather_code”,”apikey”:apikey}
 	response = requests.request(“GET”, url, params=querystring)
 	return response.json()
