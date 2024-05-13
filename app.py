@@ -35,7 +35,7 @@ def main():
                 #st.write(print(image_bytes))
                 image = Image.open(io.BytesIO(image_bytes))
                 #image = Image.open(BytesIO(image_data))
-                #st.image(image, caption="Generated Image")
+                st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
         else:
