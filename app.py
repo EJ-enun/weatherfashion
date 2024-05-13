@@ -30,9 +30,11 @@ ACCESS_TOKEN = "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"
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
+API_CLIMACELL = "OjoPt8lggqQZQQMkXwMLg2q40ZMy07dm"
+
 def fetchForecast(lat, lon, apikey):
     url = "https://api.climacell.co/v3/weather/nowcast"
-    querystring = {"lat":lat,"lon":lon,"unit_system":"si","start_time":"now","fields":"temp,feels_like,weather_code","apikey":apikey}
+    querystring = {"lat":lat,"lon":lon,"unit_system":"si","start_time":"now","fields":"temp,feels_like,weather_code,precipitation,precipitation_type","apikey":apikey}
     response = requests.request("GET", url, params=querystring)
     return response.json()
 
@@ -44,19 +46,6 @@ def consumeOne(forecast):
     "precipitation_type": forecast["precipitation_type"]["value"],
     "weather_code": forecast["weather_code"]["value"],
     }
-
-parsed_forecasts = list(map(consumeOne, forecasts))
-
-mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
-maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
-
-minfeel = min(list(map(lambda f: f["feel"], parsed_forecasts)))
-maxfeel = max(list(map(lambda f: f["feel"], parsed_forecasts)))
-
-
-is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts)))
-is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
-is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
 
 def clothing(inp):
     umbrella = inp["is_rainy"] or inp["is_snowy"]
@@ -84,7 +73,28 @@ def clothing(inp):
 
     return {"top": top, "sunscreen": sunscreen, "umbrella": umbrella }
 
-#print(clothing(consumeForecasts(fetchForecast("LAT", "LON", "APIKEY"))))
+forecasts = fetchForecast(lat, lng, API_CLIMACELL)
+parsed_forecasts = list(map(consumeOne, forecasts))
+
+mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
+maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
+
+minfeel = min(list(map(lambda f: f["feel"], parsed_forecasts)))
+maxfeel = max(list(map(lambda f: f["feel"], parsed_forecasts)))
+
+is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts)))
+is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
+is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
+
+print(clothing({
+    "mintemp": mintemp,
+    "maxtemp": maxtemp,
+    "minfeel": minfeel,
+    "maxfeel": maxfeel,
+    "is_sunny": is_sunny,
+    "is_rainy": is_rainy,
+    "is_snowy": is_snowy,
+}))
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
