@@ -26,12 +26,8 @@ def main():
     if st.button("Generate Image"):
         if text_prompt:
             try:
-                payload = {
-                    "text": text_prompt,
-                    "num_return_sequences": 1,
-                    "max_length": 256,
-                }
-                image_data = query({payload})
+                payload = {"inputs": text_prompt}
+                image_data = query(payload)
                 #st.write(print(image_bytes))
                 image = Image.open(io.BytesIO(image_data))
                 #image = Image.open(BytesIO(image_data))
