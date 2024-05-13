@@ -31,7 +31,7 @@ ACCESS_TOKEN = "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"
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
-API_CLIMACELL = "OjoPt8lggqQZQQMkXwMLg2q40ZMy07dm"
+API_CLIMACELL = "f0e196555010406d81c233044241305"
 
 #def fetchForecast(lat, lon, apikey):
 #    url = "https://api.climacell.co/v3/weather/nowcast"
@@ -39,7 +39,7 @@ API_CLIMACELL = "OjoPt8lggqQZQQMkXwMLg2q40ZMy07dm"
 #    response = requests.request("GET", url, params=querystring)
 #    return response.json()
 
-def fetchForecastWeather(lat, lon, apikey):
+def fetchForecast(lat, lon, apikey):
     url = "http://api.weatherapi.com/v1/current.json"
     querystring = {
         "key": apikey,
