@@ -21,7 +21,7 @@ def main():
 
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
-    image_bytes = query({"inputs": "Astronaut riding a horse",})
+    image_bytes = query({"inputs": "Astronaut riding a horse"})
     if st.button("Generate Image"):
         if text_prompt:
             try:
@@ -31,8 +31,8 @@ def main():
                     "max_length": 256,
                 }
                 #image_data = query(payload)
-                st.write(print(image_bytes))
-                #image = Image.open(io.BytesIO(image_bytes))
+                #st.write(print(image_bytes))
+                image = Image.open(io.BytesIO(image_bytes))
                 #image = Image.open(BytesIO(image_data))
                 #st.image(image, caption="Generated Image")
             except Exception as e:
