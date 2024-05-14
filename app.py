@@ -126,7 +126,7 @@ def clothing(inp):
 
 #forecasts = fetchForecast(lat, lng, API_WEATHER)
 #parsed_forecasts = list(map(consumeOne, forecasts))
-parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
+#parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
 
 def inputs(inp):
     return
