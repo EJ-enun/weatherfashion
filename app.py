@@ -54,21 +54,23 @@ def fetchForecast(lat, lon, apikey):
         return {}
 
 
-def get_precipitation_type(condition_text):
-    if "rain" in condition_text.lower():
+def get_precipitation_type(condition):
+    condition_text = condition.get("condition_text", "").lower()
+    if "rain" in condition_text:
         return "Rain"
-    elif "snow" in condition_text.lower():
+    elif "snow" in condition_text:
         return "Snow"
-    elif "sunny" in condition_text.lower():
+    elif "sunny" in condition_text:
         return "Sunny"
-    elif "clear" in condition_text.lower():
+    elif "clear" in condition_text:
         return "Clear"
-    elif "partly cloudy" in condition_text.lower():
+    elif "partly cloudy" in condition_text:
         return "Partly Cloudy"
-    elif "overcast" in condition_text.lower():
+    elif "overcast" in condition_text:
         return "Overcast"
     else:
         return "Unknown"
+
 
 
 
