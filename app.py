@@ -80,7 +80,7 @@ def consumeOne(forecast):
     condition_text = forecast["current"]["condition"]["text"]
     feel = forecast["current"]["feelslike_c"]
     #precipitation_type = get_precipitation_type({"condition_text": condition_text})
-    return condition_text
+    return {"condition_text": condition_text, "feels_like": feel}
 
 
 #def consumeOne(forecast):
