@@ -129,15 +129,16 @@ def clothing(inp):
 parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
 
 def inputs(inp):
-	#mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
-	#maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
+    return
+#mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
+#maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
 
-	#minfeel = min(list(map(lambda f: f["feel"], parsed_forecasts)))
-	#maxfeel = max(list(map(lambda f: f["feel"], parsed_forecasts)))
+#minfeel = min(list(map(lambda f: f["feel"], parsed_forecasts)))
+#maxfeel = max(list(map(lambda f: f["feel"], parsed_forecasts)))
 
-	#is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts)))
-	#is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
-	#is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
+#is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts)))
+#is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
+#is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
 
 
 
