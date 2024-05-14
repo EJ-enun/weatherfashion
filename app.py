@@ -124,7 +124,7 @@ parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
 #is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
 #is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
 
-st.write(parsed_forecasts)
+
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
@@ -133,7 +133,7 @@ def query(payload):
 
 def main():
     st.title("Weather Fashion")
-
+    st.write(print("This is the retrun", parsed_forecasts))
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
     image_bytes = query({"inputs": "Astronaut riding a horse"})
