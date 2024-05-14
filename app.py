@@ -133,7 +133,7 @@ def query(payload):
 
 def main():
     st.title("Weather Fashion")
-    st.write("This is the retrun")
+    st.write(parsed_forecasts)
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
     image_bytes = query({"inputs": "Astronaut riding a horse"})
