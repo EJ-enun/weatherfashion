@@ -55,18 +55,6 @@ def fetchForecast(lat, lon, apikey):
 
 
 
-def consumeOne(forecast):
-    condition_text = forecast["current"]["condition"]["text"]
-    precipitation_type = get_precipitation_type(condition_text)
-    return {
-        "temp": forecast["current"]["temp_c"],
-        "feel": forecast["current"]["feelslike_c"],
-        "precipitation": forecast["current"]["precip_mm"],
-        "precipitation_type": precipitation_type,
-        "weather_code": forecast["current"]["condition"]["code"],
-    }
-
-
 def get_precipitation_type(condition_text):
     if "rain" in condition_text.lower():
         return "Rain"
@@ -74,6 +62,13 @@ def get_precipitation_type(condition_text):
         return "Snow"
     else:
         return "Unknown"
+
+
+def consumeOne(forecast):
+    condition_text = forecast["current"]["condition"]["text"]
+    #precipitation_type = get_precipitation_type(condition_text)
+    return condition_text
+
 
 #def consumeOne(forecast):
     #condition_text = forecast["current"]["condition"]["text"]
