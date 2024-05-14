@@ -131,7 +131,7 @@ def query(payload):
 
 def main():
     st.title("Weather Fashion")
-    st.json(fetchForecast(lat, lng, API_WEATHER))
+    st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
     image_bytes = query({"inputs": "Astronaut riding a horse"})
