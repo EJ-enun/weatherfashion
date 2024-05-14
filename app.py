@@ -46,7 +46,13 @@ def fetchForecast(lat, lon, apikey):
         "q": f"{lat},{lon}",
     }
     response = requests.get(url, params=querystring)
-    return response.json()
+    try:
+        return response.json()
+    except json.JSONDecodeError:
+        print("Failed to decode API response")
+        print(response.text)
+        return {}
+
 
 
 #def consumeOne(forecast):
