@@ -54,20 +54,20 @@ def fetchForecast(lat, lon, apikey):
         return {}
 
 
-def get_precipitation_type(condition_dict):
+def get_precipitation_type(condition_text):
     # Extract the 'condition_text' field from the dictionary
-    condition_text = condition_dict.get("condition_text", "")
-    if "rain" in condition_text:
+    #condition_text = condition_dict.get("condition_text", "")
+    if "rain" in condition_text["condition"]:
         return "Rain"
-    elif "snow" in condition_text:
+    elif "snow" in condition_text["condition"]:
         return "Snow"
-    elif "sunny" in condition_text:
+    elif "sunny" in condition_text["condition"]:
         return "Sunny"
-    elif "clear" in condition_text:
+    elif "clear" in condition_text["condition"]:
         return "Clear"
-    elif "partly cloudy" in condition_text:
+    elif "partly cloudy" in condition_text["condition"]:
         return "Partly Cloudy"
-    elif "overcast" in condition_text:
+    elif "overcast" in condition_text["condition"]:
         return "Overcast"
     else:
         return "Unknown"
@@ -81,8 +81,8 @@ def consumeOne(forecast):
     weather_code = forecast["current"]["condition"]["code"]
     feel = forecast["current"]["feelslike_c"]
     precipitation = forecast["current"]["precip_mm"]
-    #precipitation_type = get_precipitation_type({"condition_text": condition_text})
-    return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code}
+    precipitation_type = get_precipitation_type({"condition_text": condition_text})
+    return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code, "precipitation_type":precipitation_type}
 
 
 #def consumeOne(forecast):
