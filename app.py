@@ -78,10 +78,11 @@ def get_precipitation_type(condition_dict):
 
 def consumeOne(forecast):
     condition_text = forecast["current"]["condition"]["text"]
+    weather_code = forecast["current"]["condition"]["code"]
     feel = forecast["current"]["feelslike_c"]
     precipitation = forecast["current"]["precip_mm"]
     #precipitation_type = get_precipitation_type({"condition_text": condition_text})
-    return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation}
+    return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code}
 
 
 #def consumeOne(forecast):
