@@ -113,7 +113,7 @@ def clothing(inp):
 
 #forecasts = fetchForecast(lat, lng, API_WEATHER)
 #parsed_forecasts = list(map(consumeOne, forecasts))
-parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
+parsed_forecasts = fetchForecast(lat, lng, API_WEATHER)
 #mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
 #maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
 
