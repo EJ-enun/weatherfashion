@@ -73,7 +73,9 @@ def get_precipitation_type(condition_text):
         return "Unknown"
 
 def consumeOne(forecast):
-    condition_text = forecast["current"]["condition"]["text"]
+    #condition_text = forecast["current"]["condition"]["text"]
+    print(type(forecast))
+    print(forecast)
     #precipitation_type = get_precipitation_type(condition_text)
     return print(condition_text)
 	#{
