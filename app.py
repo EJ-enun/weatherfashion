@@ -12,8 +12,8 @@ key = 'ca22f9473b824f59a109ed0e60d9e551'
 geocoder = OpenCageGeocode(key)
 
 address = st.text_input("Enter the location:")
-lat = 0
-lng = 0
+lat = 7.7756663
+lng = -72.2214154
 if st.button('Get Latitude and Longitude'):
     results = geocoder.geocode(address)
     if results and len(results):
