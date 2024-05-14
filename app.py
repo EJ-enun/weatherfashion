@@ -31,7 +31,7 @@ ACCESS_TOKEN = "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"
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
-API_CLIMACELL = "f0e196555010406d81c233044241305"
+API_WEATHER = "f0e196555010406d81c233044241305"
 
 #def fetchForecast(lat, lon, apikey):
 #    url = "https://api.climacell.co/v3/weather/nowcast"
@@ -74,14 +74,15 @@ def get_precipitation_type(condition_text):
 
 def consumeOne(forecast):
     condition_text = forecast["current"]["condition"]["text"]
-    precipitation_type = get_precipitation_type(condition_text)
-    return {
-    "temp": forecast["current"]["temp_c"],
-    "feel": forecast["current"]["feelslike_c"],
-    "precipitation": forecast["current"]["precip_mm"],
-    "precipitation_type": precipitation_type,
-    "weather_code": forecast["current"]["condition"]["code"],
-    }
+    #precipitation_type = get_precipitation_type(condition_text)
+    return print(condition_text)
+	#{
+    #"temp": forecast["current"]["temp_c"],
+    #"feel": forecast["current"]["feelslike_c"],
+    #"precipitation": forecast["current"]["precip_mm"],
+    #"precipitation_type": precipitation_type,
+    #"weather_code": forecast["current"]["condition"]["code"],
+    #}
 
 
 
@@ -111,7 +112,7 @@ def clothing(inp):
 
     return {"top": top, "sunscreen": sunscreen, "umbrella": umbrella }
 
-forecasts = fetchForecast(lat, lng, API_CLIMACELL)
+forecasts = fetchForecast(lat, lng, API_WEATHER)
 parsed_forecasts = list(map(consumeOne, forecasts))
 
 mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
@@ -124,15 +125,7 @@ is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts))
 is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
 is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
 
-st.write(clothing({
-    "mintemp": mintemp,
-    "maxtemp": maxtemp,
-    "minfeel": minfeel,
-    "maxfeel": maxfeel,
-    "is_sunny": is_sunny,
-    "is_rainy": is_rainy,
-    "is_snowy": is_snowy,
-}))
+st.write(parsed_forecasts)
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
