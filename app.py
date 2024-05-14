@@ -55,14 +55,17 @@ def fetchForecast(lat, lon, apikey):
 
 
 
-#def consumeOne(forecast):
-#    return {
-#    "temp": forecast["temp"]["value"],
-#    "feel": forecast["feels_like"]["value"],
-#    "precipitation": forecast["precipitation"]["value"],
-#    "precipitation_type": forecast["precipitation_type"]["value"],
-#    "weather_code": forecast["weather_code"]["value"],
-#    }
+def consumeOne(forecast):
+    condition_text = forecast["current"]["condition"]["text"]
+    precipitation_type = get_precipitation_type(condition_text)
+    return {
+        "temp": forecast["current"]["temp_c"],
+        "feel": forecast["current"]["feelslike_c"],
+        "precipitation": forecast["current"]["precip_mm"],
+        "precipitation_type": precipitation_type,
+        "weather_code": forecast["current"]["condition"]["code"],
+    }
+
 
 def get_precipitation_type(condition_text):
     if "rain" in condition_text.lower():
@@ -72,11 +75,11 @@ def get_precipitation_type(condition_text):
     else:
         return "Unknown"
 
-def consumeOne(forecast):
+#def consumeOne(forecast):
     #condition_text = forecast["current"]["condition"]["text"]
     
     #precipitation_type = get_precipitation_type(condition_text)
-    return print(type(forecast), forecast)
+    #return print(type(forecast), forecast)
 	#{
     #"temp": forecast["current"]["temp_c"],
     #"feel": forecast["current"]["feelslike_c"],
@@ -113,7 +116,7 @@ def clothing(inp):
 
 #forecasts = fetchForecast(lat, lng, API_WEATHER)
 #parsed_forecasts = list(map(consumeOne, forecasts))
-parsed_forecasts = fetchForecast(lat, lng, API_WEATHER)
+parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
 #mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
 #maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
 
@@ -133,7 +136,7 @@ def query(payload):
 
 def main():
     st.title("Weather Fashion")
-    st.json(parsed_forecasts)
+    st.json(fetchForecast(lat, lng, API_WEATHER))
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
     image_bytes = query({"inputs": "Astronaut riding a horse"})
