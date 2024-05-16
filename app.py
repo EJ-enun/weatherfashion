@@ -179,8 +179,9 @@ def get_location(address):
 
 
 def main():
-	
-    set_logo("/weatherfashion/OIG.jpg")
+    # Use the raw GitHub URL of the image
+    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/weatherfashion/OIG.jpg"
+    set_logo(image_url)
     set_background_color('#2E2252')
     address = st.text_input("Put in your address:")
     weather = None
