@@ -147,29 +147,29 @@ def get_location():
         		st.write(f'Latitude: {lat}, Longitude: {lng}')
         	else:
         		st.write('Location not found')
-        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+       		return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
 def main():
+    weather = consumeOne(get_location())
+    st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
 
-	weather = consumeOne(get_location())
-    	st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
+    # Get user input
+    text_prompt = st.text_input("Enter a description for the image:")
+    if st.button("Generate Image"):
+        if text_prompt:
+            try:
+                payload = {"inputs": text_prompt}
+                image_data = query(payload)
+                #st.write(print(image_bytes))
+                image = Image.open(io.BytesIO(image_data))
+                #image = Image.open(BytesIO(image_data))
+                st.image(image, caption="Generated Image")
+            except Exception as e:
+                st.error(f"Error generating image: {e}")
+        else:
+            st.warning("Please enter a description.")
 
-        # Get user input
-	text_prompt = st.text_input("Enter a description for the image:")
-        if st.button("Generate Image"):
-            if text_prompt:
-                try:
-                    payload = {"inputs": text_prompt}
-                    image_data = query(payload)
-                    #st.write(print(image_bytes))
-                    image = Image.open(io.BytesIO(image_data))
-                    #image = Image.open(BytesIO(image_data))
-                    st.image(image, caption="Generated Image")
-                except Exception as e:
-                    st.error(f"Error generating image: {e}")
-            else:
-                st.warning("Please enter a description.")
 
 
 if __name__ == "__main__":
