@@ -13,7 +13,7 @@ API_WEATHER = "f0e196555010406d81c233044241305"
 
 #API key from: huggingface.co
 ACCESS_TOKEN = "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"
-set_logo("/weatherfashion/OIG.jpg")
+
 st.title('SWEATHER')
 st.write("Let the weather in your city speak for you! For when you have no idea what to wear in your sweaeason!")
 
@@ -180,6 +180,7 @@ def get_location(address):
 
 def main():
 	
+    set_logo("/weatherfashion/OIG.jpg")
     set_background_color('#2E2252')
     address = st.text_input("Put in your address:")
     weather = None
