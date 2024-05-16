@@ -160,10 +160,10 @@ def main():
     weather = None
     if st.button('GO'):
         weather = get_location(address)
-        st.write(f"The weather in your location is {weather['condition_text']}. Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have for {weather['condition_text']} weather.")
+        st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have for this weather.")
 
     # Get user input
-    text_prompt = st.text_input("Enter a description for the image:")
+    text_prompt = st.text_input("Enter as many fits as you have in your wardrobe(top and pants should be mentioned together not separately):")
     if st.button("Generate Image"):
         if text_prompt:
             try:
