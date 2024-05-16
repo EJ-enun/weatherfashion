@@ -12,7 +12,8 @@ key = 'ca22f9473b824f59a109ed0e60d9e551'
 
 address = st.text_input("Put in your address:")
 geocoder = OpenCageGeocode(key)
-
+if st.button('GO'):
+	main()
 
 # Set up your Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
@@ -138,15 +139,15 @@ def query(payload):
 	return response.content
 	
 def get_location(address):
-	if st.button('GO'):
-        	results = geocoder.geocode(address)
-        	if results and len(results):
-        		lat = results[0]['geometry']['lat']
-        		lng = results[0]['geometry']['lng']
-        		st.write(f'Latitude: {lat}, Longitude: {lng}')
-        	else:
-        		st.write('Location not found')
-       		return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+	
+        results = geocoder.geocode(address)
+        if results and len(results):
+        	lat = results[0]['geometry']['lat']
+        	lng = results[0]['geometry']['lng']
+        	st.write(f'Latitude: {lat}, Longitude: {lng}')
+        else:
+        	st.write('Location not found')
+       	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
 def main():
