@@ -144,7 +144,7 @@ def query(payload):
 	return response.content
 	
 def get_location(address):
-	geocoder = OpenCageGeocode(key)
+        geocoder = OpenCageGeocode(key)
         results = geocoder.geocode(address)
         if results and len(results):
         	lat = results[0]['geometry']['lat']
