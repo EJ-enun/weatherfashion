@@ -140,13 +140,13 @@ def get_location():
 	address = st.text_input("Put in your address:")
 	geocoder = OpenCageGeocode(key)
 	if st.button('GO'):
-        results = geocoder.geocode(address)
+        	results = geocoder.geocode(address)
         if results and len(results):
-            lat = results[0]['geometry']['lat']
-            lng = results[0]['geometry']['lng']
-            st.write(f'Latitude: {lat}, Longitude: {lng}')
+        	lat = results[0]['geometry']['lat']
+        	lng = results[0]['geometry']['lng']
+        	st.write(f'Latitude: {lat}, Longitude: {lng}')
         else:
-            st.write('Location not found')
+        	st.write('Location not found')
         return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
