@@ -147,7 +147,7 @@ def get_location():
         		st.write(f'Latitude: {lat}, Longitude: {lng}')
         	else:
         		st.write('Location not found')
-        return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
 def main():
