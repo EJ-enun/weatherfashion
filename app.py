@@ -161,7 +161,7 @@ def main():
     weather = None
     if st.button('GO'):
         weather = get_location(address)
-    	st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
+        st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
 
     # Get user input
     text_prompt = st.text_input("Enter a description for the image:")
