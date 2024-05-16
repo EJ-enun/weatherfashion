@@ -20,6 +20,7 @@ st.write("Let the weather in your city speak for you! For when you have no idea 
 
 address = st.text_input("Put in your address:")
 geocoder = OpenCageGeocode(key)
+weather = None
 if st.button('GO'):
 	weather = get_location(address)
 
