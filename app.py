@@ -182,7 +182,7 @@ def main():
     # Use the raw GitHub URL of the image
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/blob/main/OIG.jpg"
     set_logo(image_url)
-    set_background_color('#f2e9d7')
+    set_background_color('#fffbec')
     address = st.text_input("Put in your address:")
     weather = None
     if st.button('GO'):
