@@ -150,7 +150,7 @@ def get_location(address):
 
 
 def main():
-    weather = consumeOne(get_location(address))
+    weather = get_location(address)
     st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
 
     # Get user input
