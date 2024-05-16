@@ -141,7 +141,7 @@ def get_location():
 	geocoder = OpenCageGeocode(key)
 	if st.button('GO'):
         	results = geocoder.geocode(address)
-        if results and len(results):
+        	if results and len(results):
         	lat = results[0]['geometry']['lat']
         	lng = results[0]['geometry']['lng']
         	st.write(f'Latitude: {lat}, Longitude: {lng}')
