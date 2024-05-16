@@ -86,7 +86,7 @@ def set_logo(logo):
     logo_path = "path_to_your_logo/logo.png"
 
     # Create three columns
-    col1, col2, col3 = st.beta_columns([1,6,1])
+    col1, col2, col3 = st.columns([1,6,1])
 
     # Display the logo in the middle column
     with col2:
