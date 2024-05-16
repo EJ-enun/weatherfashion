@@ -11,17 +11,7 @@ st.title('SWEATHER')
 key = 'ca22f9473b824f59a109ed0e60d9e551'
 geocoder = OpenCageGeocode(key)
 
-address = st.text_input("Enter the location:")
-lat = 7.7756663
-lng = -72.2214154
-if st.button('Get Latitude and Longitude'):
-    results = geocoder.geocode(address)
-    if results and len(results):
-        lat = results[0]['geometry']['lat']
-        lng = results[0]['geometry']['lng']
-        st.write(f'Latitude: {lat}, Longitude: {lng}')
-    else:
-        st.write('Location not found')
+
 
 # Set up your Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
@@ -126,7 +116,7 @@ def clothing(inp):
 
 #forecasts = fetchForecast(lat, lng, API_WEATHER)
 #parsed_forecasts = list(map(consumeOne, forecasts))
-#parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHER))
+#parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHkbshoiej9y0e3uER))
 
 def inputs(inp):
     return
@@ -145,27 +135,41 @@ def inputs(inp):
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.content
+	
+def get_location():
+	address = st.text_input("Put in your address:")
+	if st.button('GO'):
+        results = geocoder.geocode(address)
+        if results and len(results):
+            lat = results[0]['geometry']['lat']
+            lng = results[0]['geometry']['lng']
+            st.write(f'Latitude: {lat}, Longitude: {lng}')
+        else:
+            st.write('Location not found')
+        return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
 def main():
-    st.title("Weather Fashion")
-    st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
-    # Get user input
-    text_prompt = st.text_input("Enter a description for the image:")
-    image_bytes = query({"inputs": "Astronaut riding a horse"})
-    if st.button("Generate Image"):
-        if text_prompt:
-            try:
-                payload = {"inputs": text_prompt}
-                image_data = query(payload)
-                #st.write(print(image_bytes))
-                image = Image.open(io.BytesIO(image_data))
-                #image = Image.open(BytesIO(image_data))
-                st.image(image, caption="Generated Image")
-            except Exception as e:
-                st.error(f"Error generating image: {e}")
-        else:
-            st.warning("Please enter a description.")
+
+	weather = consumeOne(get_location())
+    	st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
+
+        # Get user input
+	text_prompt = st.text_input("Enter a description for the image:")
+        if st.button("Generate Image"):
+            if text_prompt:
+                try:
+                    payload = {"inputs": text_prompt}
+                    image_data = query(payload)
+                    #st.write(print(image_bytes))
+                    image = Image.open(io.BytesIO(image_data))
+                    #image = Image.open(BytesIO(image_data))
+                    st.image(image, caption="Generated Image")
+                except Exception as e:
+                    st.error(f"Error generating image: {e}")
+            else:
+                st.warning("Please enter a description.")
+
 
 if __name__ == "__main__":
     main()
