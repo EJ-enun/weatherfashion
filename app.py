@@ -13,7 +13,7 @@ API_WEATHER = "f0e196555010406d81c233044241305"
 
 #API key from: huggingface.co
 ACCESS_TOKEN = "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"
-
+set_logo("/weatherfashion/OIG.jpg")
 st.title('SWEATHER')
 st.write("Let the weather in your city speak for you! For when you have no idea what to wear in your sweaeason!")
 
@@ -79,6 +79,18 @@ def set_background_color(color):
     </style>
     '''
     st.markdown(background_color, unsafe_allow_html=True)
+
+def set_logo(logo):
+
+    # Relative path to your logo in your GitHub repository
+    logo_path = "path_to_your_logo/logo.png"
+
+    # Create three columns
+    col1, col2, col3 = st.beta_columns([1,6,1])
+
+    # Display the logo in the middle column
+    with col2:
+        return st.image(logo, width=200)
 
 
 
@@ -167,6 +179,7 @@ def get_location(address):
 
 
 def main():
+	
     set_background_color('#2E2252')
     address = st.text_input("Put in your address:")
     weather = None
