@@ -9,7 +9,7 @@ st.title('SWEATHER')
 
 # Get the API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
-geocoder = OpenCageGeocode(key)
+
 
 
 
@@ -138,6 +138,7 @@ def query(payload):
 	
 def get_location():
 	address = st.text_input("Put in your address:")
+	geocoder = OpenCageGeocode(key)
 	if st.button('GO'):
         results = geocoder.geocode(address)
         if results and len(results):
