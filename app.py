@@ -190,7 +190,7 @@ def main():
         st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have for this weather.")
 
     # Get user input
-    text_prompt = st.text_input("Enter as many fits as you have in your wardrobe(top and pants should be mentioned together not separately):")
+    text_prompt = st.text_input("Enter as many fits as you have in your wardrobe:")
     if st.button("Generate Image"):
         if text_prompt:
             try:
