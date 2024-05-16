@@ -6,11 +6,12 @@ from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
 
 st.title('SWEATHER')
-
+st.write("Let the weather in your city speak for you! For when you have no idea what to wear in your sweaeason!")
 # Get the API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
 
-
+address = st.text_input("Put in your address:")
+geocoder = OpenCageGeocode(key)
 
 
 # Set up your Stable Diffusion Inference Endpoint
@@ -136,9 +137,7 @@ def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.content
 	
-def get_location():
-	address = st.text_input("Put in your address:")
-	geocoder = OpenCageGeocode(key)
+def get_location(address):
 	if st.button('GO'):
         	results = geocoder.geocode(address)
         	if results and len(results):
@@ -151,7 +150,7 @@ def get_location():
 
 
 def main():
-    weather = consumeOne(get_location())
+    weather = consumeOne(get_location(address))
     st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
 
     # Get user input
