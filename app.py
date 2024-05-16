@@ -5,25 +5,33 @@ import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
 
+# API key from: https://opencagedata.com
+key = 'ca22f9473b824f59a109ed0e60d9e551'
+
+#API key from: https://weatherapi.com
+API_WEATHER = "f0e196555010406d81c233044241305"
+
+#API key from: huggingface.co
+ACCESS_TOKEN = "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"
+
 st.title('SWEATHER')
 st.write("Let the weather in your city speak for you! For when you have no idea what to wear in your sweaeason!")
-# Get the API key from: https://opencagedata.com
-key = 'ca22f9473b824f59a109ed0e60d9e551'
+
 
 address = st.text_input("Put in your address:")
 geocoder = OpenCageGeocode(key)
 if st.button('GO'):
-	main()
+	weather = get_location(address)
 
 # Set up your Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
 
 # Your access token
-ACCESS_TOKEN = "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"
+
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
-API_WEATHER = "f0e196555010406d81c233044241305"
+
 
 #def fetchForecast(lat, lon, apikey):
 #    url = "https://api.climacell.co/v3/weather/nowcast"
@@ -151,7 +159,7 @@ def get_location(address):
 
 
 def main():
-    weather = get_location(address)
+    
     st.write("The weather in your location is", weather["condition_text"], "Lets get you fitted up! Give us a detailed description(color, style, brand) of every clothing which you have for", weather["condition_text"], "weather")
 
     # Get user input
