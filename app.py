@@ -70,6 +70,17 @@ def get_precipitation_type(condition_text):
         return "Unknown"
 
 
+def set_background_color(color):
+    background_color = f'''
+    <style>
+    .stApp {{
+        background-color: {color};
+    }}
+    </style>
+    '''
+    st.markdown(background_color, unsafe_allow_html=True)
+
+
 
 
 
@@ -156,6 +167,7 @@ def get_location(address):
 
 
 def main():
+    set_background_color('#2E2252')
     address = st.text_input("Put in your address:")
     weather = None
     if st.button('GO'):
