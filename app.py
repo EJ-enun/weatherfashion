@@ -185,9 +185,6 @@ def main():
     set_background_color('#fffbec')
     address = st.text_input("Put in your address:")
     weather = None
-    if st.button('GO'):
-        weather = get_location(address)
-        st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
     
     # Define the options
     options = ["Male", "Female", "Non-binary", "Multiple"]
@@ -200,6 +197,9 @@ def main():
 
     # Convert the list of strings into a single string
     #prompt = ", ".join(selected_options)
+    if st.button('GO'):
+        weather = get_location(address)
+        st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
     
     # Now you can use 'prompt' as an input for your model
     # Get user input
