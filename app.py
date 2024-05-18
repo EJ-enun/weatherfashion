@@ -201,18 +201,17 @@ def main():
     #prompt = ", ".join(selected_options)
     st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
 
-# Now you can use 'prompt' as an input for your model
+    # Now you can use 'prompt' as an input for your model
     # Get user input
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
     if st.button("Generate Image"):
         if text_prompt:
-	    get_fits = text_prompt.split(",")
+            get_fits = text_prompt.split(",")
             count_list = len(get_fits)
             # Join the list into a single string with each outfit separated by a comma
             model_input = ", ".join(get_fits)
             prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input}"
 	    
-	
             try:
                 payload = {"inputs": prompt}
                 image_data = query(payload)
