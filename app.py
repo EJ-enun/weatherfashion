@@ -204,8 +204,9 @@ def main():
             count_list = len(get_fits)
             # Join the list into a single string with each outfit separated by a comma
             model_input = ", ".join(get_fits)
-            weather_string = ', '.join([f'{k}: {v}' for k, v in weather.items()])
-            prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input} for this weather {weather_string}"
+            #weather_string = ', '.join([f'{k}: {v}' for k, v in weather.items()])
+            #prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input} for this weather {weather_string}"
+	    prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input}"
 	    
             try:
                 payload = {"inputs": prompt}
