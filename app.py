@@ -191,7 +191,7 @@ def main():
 
     # Create the multiselect widget
     selected_options = st.multiselect("Choose your options:", options)
-
+    weather = "Cloudy"
     if st.button('GO'):
         weather = get_location(address)
         st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
