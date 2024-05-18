@@ -190,11 +190,18 @@ def main():
         st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have for this weather.")
 
     # Get user input
-    text_prompt = st.text_input("Enter as many fits as you have in your wardrobe:")
+    text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
     if st.button("Generate Image"):
         if text_prompt:
+	    get_fits = text_prompt.split(",")
+            count_list = len(get_fits)
+            # Join the list into a single string with each outfit separated by a comma
+            model_input = ", ".join(get_fits)
+            prompt = f"Create {count_list} objects of wear based on each description: {model_input}"
+	    
+	
             try:
-                payload = {"inputs": text_prompt}
+                payload = {"inputs": prompt}
                 image_data = query(payload)
                 #st.write(print(image_bytes))
                 image = Image.open(io.BytesIO(image_data))
