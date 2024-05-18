@@ -192,16 +192,10 @@ def main():
     # Create the multiselect widget
     selected_options = st.multiselect("Choose your options:", options)
 
-    # The selected options are returned as a list of strings
-    #st.write(f"You selected: {selected_options}")
-
-    # Convert the list of strings into a single string
-    #prompt = ", ".join(selected_options)
     if st.button('GO'):
         weather = get_location(address)
         st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
     
-    # Now you can use 'prompt' as an input for your model
     # Get user input
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
     if st.button("Generate Image"):
@@ -210,19 +204,19 @@ def main():
             count_list = len(get_fits)
             # Join the list into a single string with each outfit separated by a comma
             model_input = ", ".join(get_fits)
-            prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input}"
+            weather_string = ', '.join([f'{k}: {v}' for k, v in weather.items()])
+            prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input} for this weather {weather_string}"
 	    
             try:
                 payload = {"inputs": prompt}
                 image_data = query(payload)
-                #st.write(print(image_bytes))
                 image = Image.open(io.BytesIO(image_data))
-                #image = Image.open(BytesIO(image_data))
                 st.image(image, caption="Generated Image")
             except Exception as e:
                 st.error(f"Error generating image: {e}")
         else:
             st.warning("Please enter a description.")
+
 
 
 
