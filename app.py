@@ -182,7 +182,7 @@ def main():
     # Use the raw GitHub URL of the image
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     #set_logo(image_url)
-    htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.jpg"
+    htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
     st.image(htp, caption= 'logo', width=350, caption = 'Dress for the Weather, Impress with Style. ')
     set_background_color('#fffbec')
     address = st.text_input("Address:")
