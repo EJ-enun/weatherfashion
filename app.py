@@ -227,14 +227,15 @@ def main():
             image = image.convert('RGB')
         st.image(image, caption="Uploaded Image", use_column_width=True)
         if st.button("Analyze"):
-	    st.write("Model: ", model)
+            st.write("Model: ", model)
             st.write("Processor: ", processor)
             inputs = processor(images=image, return_tensors="pt", padding=True)
-	    st.write("Inputs: ", inputs)
+            st.write("Inputs: ", inputs)
             outputs = model.generate(**inputs)
-	    st.write("Outputs: ", outputs)
+            st.write("Outputs: ", outputs)
             result = processor.batch_decode(outputs, skip_special_tokens=True)
             st.write("Prediction:", result)
+
 
 
 
