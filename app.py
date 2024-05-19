@@ -5,6 +5,12 @@ import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
+from transformers import AutoProcessor, Kosmos2ForConditionalGeneration
+
+# Load the Kosmos-2 model
+model = Kosmos2ForConditionalGeneration.from_pretrained("microsoft/kosmos-2-patch14-224")
+processor = AutoProcessor.from_pretrained("microsoft/kosmos-2-patch14-224")
+
 
 # API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
@@ -185,37 +191,25 @@ def get_location(address):
 
 
 def main():
-    # Use the raw GitHub URL of the image
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
-    #set_logo(image_url)
     htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    st.image(htp, caption = 'Dress for the Weather, Impress with Style. ')
+    st.image(htp, caption = 'Dress for the Weather, Impress with Style.')
     set_background_color('#fffbec')
     address = st.text_input("Address:")
     weather = None
-    
-    # Define the options
     options = ["Male", "Female", "Non-binary"]
-
-    # Create the multiselect widget
     selected_options = st.multiselect("Choose your options:", options)
     weather = "Cloudy"
     if st.button('GO'):
         weather = get_location(address)
         st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
-    
-    # Get user input
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
     if st.button("Generate Image"):
         if text_prompt:
             get_fits = text_prompt.split(",")
             count_list = len(get_fits)
-            # Join the list into a single string with each outfit separated by a comma
             model_input = ", ".join(get_fits)
-            #weather_string = ', '.join([f'{k}: {v}' for k, v in weather.items()])
-            #prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input} for this weather {weather_string}"
             prompt = f"Create {count_list} separate outfits for {selected_options} based on each description: {model_input}"
-	    
             try:
                 payload = {"inputs": prompt}
                 image_data = query_stable_diff(payload)
@@ -225,36 +219,19 @@ def main():
                 st.error(f"Error generating image: {e}")
         else:
             st.warning("Please enter a description.")
-
     st.write("Fun Image Captioning")
-    
-    # Create an input file uploader
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-    
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        
-        # Check if the image has an alpha channel
         if image.mode == 'RGBA':
-            # Convert the image to RGB mode
             image = image.convert('RGB')
-        
         st.image(image, caption="Uploaded Image", use_column_width=True)
-        
-        # Convert the image to base64
-        buffered = io.BytesIO()
-        image.save(buffered, format="JPEG")
-        img_str = base64.b64encode(buffered.getvalue()).decode()
-
-        # Create a button to trigger model inference
         if st.button("Analyze"):
-            # Perform inference using the loaded model
-            payload = {
-                "inputs": img_str
-            }
-            result = query_ydshieh(payload)
-            
+            inputs = processor(images=image, return_tensors="pt", padding=True)
+            outputs = model.generate(**inputs)
+            result = processor.batch_decode(outputs, skip_special_tokens=True)
             st.write("Prediction:", result)
+
 
 
 
