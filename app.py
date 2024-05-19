@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from PIL import Image
+import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
