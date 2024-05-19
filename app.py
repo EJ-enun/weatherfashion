@@ -228,6 +228,12 @@ def main():
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
+        
+        # Check if the image has an alpha channel
+        if image.mode == 'RGBA':
+            # Convert the image to RGB mode
+            image = image.convert('RGB')
+        
         st.image(image, caption="Uploaded Image", use_column_width=True)
         
         # Convert the image to base64
