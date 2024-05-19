@@ -183,13 +183,13 @@ def main():
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     #set_logo(image_url)
     htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    st.image(htp, width=350, caption = 'Dress for the Weather, Impress with Style. ')
+    st.image(htp, caption = 'Dress for the Weather, Impress with Style. ')
     set_background_color('#fffbec')
     address = st.text_input("Address:")
     weather = None
     
     # Define the options
-    options = ["Male", "Female", "Non-binary", "Multiple"]
+    options = ["Male", "Female", "Non-binary"]
 
     # Create the multiselect widget
     selected_options = st.multiselect("Choose your options:", options)
