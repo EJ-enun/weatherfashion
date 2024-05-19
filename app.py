@@ -185,7 +185,8 @@ def get_location(address):
         else:
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
-
+# Load the text-to-caption model
+model = pipeline('text-to-caption', model='snowflake-arctic-instruct')
 
 # Load the image-to-text model
 model = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
@@ -226,10 +227,11 @@ def main():
         if image.mode == 'RGBA':
             image = image.convert('RGB')
         st.image(image, caption="Uploaded Image", use_column_width=True)
-        #if st.button("Analyze"):
-            # Perform inference using the loaded model
-        #    result = model(image)
-        #    st.write("Prediction:", result)
+    st.write("Text-to-Caption")
+    input_text = st.text_input("Enter your text:")
+    if st.button("Generate Caption"):
+        result = model(input_text)
+        st.write("Caption:", result)
 
 
 
