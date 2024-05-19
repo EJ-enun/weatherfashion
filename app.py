@@ -183,7 +183,7 @@ def main():
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     #set_logo(image_url)
     htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    st.image(htp, caption= 'logo', width=350, caption = 'Dress for the Weather, Impress with Style. ')
+    st.image(htp, width=350, caption = 'Dress for the Weather, Impress with Style. ')
     set_background_color('#fffbec')
     address = st.text_input("Address:")
     weather = None
@@ -208,7 +208,7 @@ def main():
             model_input = ", ".join(get_fits)
             #weather_string = ', '.join([f'{k}: {v}' for k, v in weather.items()])
             #prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input} for this weather {weather_string}"
-            prompt = f"Create {count_list} objects of wear for {selected_options} based on each description: {model_input}"
+            prompt = f"Create {count_list} separate outfits for {selected_options} based on each description: {model_input}"
 	    
             try:
                 payload = {"inputs": prompt}
@@ -219,6 +219,7 @@ def main():
                 st.error(f"Error generating image: {e}")
         else:
             st.warning("Please enter a description.")
+
 
 
 
