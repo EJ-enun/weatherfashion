@@ -221,7 +221,7 @@ def main():
         else:
             st.warning("Please enter a description.")
 
-    st.title("Hugging Face Model Demo")
+    st.write("Hugging Face Model Demo")
     
     # Create an input file uploader
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
