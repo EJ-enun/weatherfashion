@@ -180,8 +180,10 @@ def get_location(address):
 
 def main():
     # Use the raw GitHub URL of the image
-    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/blob/main/OIG.jpg"
-    set_logo(image_url)
+    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
+    #set_logo(image_url)
+    htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.jpg"
+    st.image(htp, caption= 'logo', width=350, caption = 'Dress for the Weather, Impress with Style. ')
     set_background_color('#fffbec')
     address = st.text_input("Address:")
     weather = None
@@ -194,7 +196,7 @@ def main():
     weather = "Cloudy"
     if st.button('GO'):
         weather = get_location(address)
-        st.write(f"Dress for the Weather, Impress with Style. Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
+        st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
     
     # Get user input
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
