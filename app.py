@@ -5,6 +5,7 @@ import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
+from transformers import pipeline
 
 
 
