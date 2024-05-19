@@ -19,7 +19,7 @@ st.title('Climate Couture')
 st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
 
 
-API_URL_ydshieh = "https://api-inference.huggingface.co/models/ydshieh/Kosmos-2"
+API_URL_ydshieh = "https://api-inference.huggingface.co/models/microsoft/kosmos-2-patch14-224"
 
 
 # Set up your Stable Diffusion Inference Endpoint
