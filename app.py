@@ -186,7 +186,7 @@ def get_location(address):
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 # Load the text-to-caption model
-model = pipeline('text-to-caption', model='snowflake-arctic-instruct')
+model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
 # Load the image-to-text model
 model = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
