@@ -2,3 +2,4 @@ streamlit
 opencage
 transformers
 tensorflow
+tf-keras
