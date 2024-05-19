@@ -18,6 +18,7 @@ st.title('Climate Couture')
 st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
 
 
+API_URL_ydshieh = "https://api-inference.huggingface.co/models/ydshieh/Kosmos-2"
 
 
 # Set up your Stable Diffusion Inference Endpoint
@@ -220,7 +221,29 @@ def main():
         else:
             st.warning("Please enter a description.")
 
+    st.title("Hugging Face Model Demo")
+    
+    # Create an input file uploader
+    uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+    
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Uploaded Image", use_column_width=True)
+        
+        # Convert the image to base64
+        buffered = io.BytesIO()
+        image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode()
 
+        # Create a button to trigger model inference
+        if st.button("Analyze"):
+            # Perform inference using the loaded model
+            payload = {
+                "inputs": img_str
+            }
+            result = query(payload)
+            
+            st.write("Prediction:", result)
 
 
 
