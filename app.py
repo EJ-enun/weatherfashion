@@ -5,9 +5,9 @@ import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
-from transformers import pipeline, AutoModelForCausalLM
+from transformers import pipeline
 
-model = AutoModelForCausalLM.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
+#model = AutoModelForCausalLM.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
 
 # API key from: https://opencagedata.com
@@ -187,7 +187,7 @@ def get_location(address):
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 # Load the text-to-caption model
-#model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
+model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
 # Load the image-to-text model
 model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
