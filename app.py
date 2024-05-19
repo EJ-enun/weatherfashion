@@ -226,10 +226,10 @@ def main():
         if image.mode == 'RGBA':
             image = image.convert('RGB')
         st.image(image, caption="Uploaded Image", use_column_width=True)
-        if st.button("Analyze"):
+        #if st.button("Analyze"):
             # Perform inference using the loaded model
-            result = model(image)
-            st.write("Prediction:", result)
+        #    result = model(image)
+        #    st.write("Prediction:", result)
 
 
 
