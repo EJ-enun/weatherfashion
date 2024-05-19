@@ -14,8 +14,8 @@ API_WEATHER = "f0e196555010406d81c233044241305"
 #API key from: huggingface.co
 ACCESS_TOKEN = "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"
 
-st.title('SWEATHER')
-st.write("Let the weather in your city speak for you! For when you have no idea what to wear in your sweaeason!")
+st.title('Climate Couture')
+st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
 
 
 
@@ -183,7 +183,7 @@ def main():
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/blob/main/OIG.jpg"
     set_logo(image_url)
     set_background_color('#fffbec')
-    address = st.text_input("Put in your address:")
+    address = st.text_input("Address:")
     weather = None
     
     # Define the options
@@ -194,7 +194,7 @@ def main():
     weather = "Cloudy"
     if st.button('GO'):
         weather = get_location(address)
-        st.write(f"Now Let's get you fitted up! Give us a detailed description (color, style, brand) of every clothing which you have that matches the weather.")
+        st.write(f"Dress for the Weather, Impress with Style. Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
     
     # Get user input
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
