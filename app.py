@@ -5,11 +5,7 @@ import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
-from transformers import AutoProcessor, Kosmos2ForConditionalGeneration
 
-# Load the Kosmos-2 model
-model = Kosmos2ForConditionalGeneration.from_pretrained("microsoft/kosmos-2-patch14-224")
-processor = AutoProcessor.from_pretrained("microsoft/kosmos-2-patch14-224")
 
 
 # API key from: https://opencagedata.com
@@ -190,6 +186,9 @@ def get_location(address):
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
+# Load the image-to-text model
+model = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
+
 def main():
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
@@ -227,13 +226,8 @@ def main():
             image = image.convert('RGB')
         st.image(image, caption="Uploaded Image", use_column_width=True)
         if st.button("Analyze"):
-            st.write("Model: ", model)
-            st.write("Processor: ", processor)
-            inputs = processor(images=image, return_tensors="pt", padding=True)
-            st.write("Inputs: ", inputs)
-            outputs = model.generate(**inputs)
-            st.write("Outputs: ", outputs)
-            result = processor.batch_decode(outputs, skip_special_tokens=True)
+            # Perform inference using the loaded model
+            result = model(image)
             st.write("Prediction:", result)
 
 
