@@ -1,4 +1,4 @@
 streamlit
 opencage
 transformers
-
+pytorch
