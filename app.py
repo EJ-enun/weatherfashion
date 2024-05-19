@@ -164,8 +164,12 @@ def inputs(inp):
 
 
 
-def query(payload):
+def query_stable_diff(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
+	return response.content
+	
+def query_ydshieh(payload):
+	response = requests.post(API_URL_ydshieh, headers=headers, json=payload)
 	return response.content
 	
 def get_location(address):
@@ -214,7 +218,7 @@ def main():
 	    
             try:
                 payload = {"inputs": prompt}
-                image_data = query(payload)
+                image_data = query_stable_diff(payload)
                 image = Image.open(io.BytesIO(image_data))
                 st.image(image, caption="Generated Image")
             except Exception as e:
@@ -222,7 +226,7 @@ def main():
         else:
             st.warning("Please enter a description.")
 
-    st.write("Hugging Face Model Demo")
+    st.write("Fun Image Captioning")
     
     # Create an input file uploader
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
@@ -248,7 +252,7 @@ def main():
             payload = {
                 "inputs": img_str
             }
-            result = query(payload)
+            result = query_ydshieh(payload)
             
             st.write("Prediction:", result)
 
