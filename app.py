@@ -38,29 +38,8 @@ headers = {"Authorization": "Bearer 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"}
 # Set assistant icon to Snowflake logo
 icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
-# App title
-#st.set_page_config(page_title="Snowflake Arctic")
 
-# Replicate Credentials
-with st.sidebar:
-    #st.title('Snowflake Arctic')
-    if 'REPLICATE_API_TOKEN' in st.secrets:
-        #st.success('API token loaded!', icon='✅')
-        replicate_api = REPLICATE_API_TOKEN
-        os.environ['REPLICATE_API_TOKEN'] = replicate_api
-        #st.subheader("Adjust model parameters")
-        #temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
-        #top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-    else:
-        replicate_api = st.text_input('Enter Replicate API token:', type='password')
-        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
-            st.warning('Please enter your Replicate API token.', icon='⚠️')
-            st.markdown("**Don't have an API token?** Head over to [Replicate](https://replicate.com) to sign up for one.")
-        #else:
-        #    st.success('API token loaded!', icon='✅')
-
-    
-
+os.environ['REPLICATE_API_TOKEN'] = REPLICATE_API_TOKEN
 
 #def fetchForecast(lat, lon, apikey):
 #    url = "https://api.climacell.co/v3/weather/nowcast"
