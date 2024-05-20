@@ -280,7 +280,7 @@ def main():
       input={
           "top_k": 50,
           "top_p": 0.9,
-          "prompt": input_text,
+          "prompt": f" Create an instagram worthy caption from the following: {input_text}",
           "temperature": 0.2,
           "max_new_tokens": 512,
           "min_new_tokens": 0,
