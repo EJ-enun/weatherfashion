@@ -11,7 +11,7 @@ import os
 
 
 REPLICATE_API_TOKEN='r8_70DiHD1crmyex93p560AlTEP8YLzSjR1AupYr'
-replicate = Client(api_token=REPLICATE_API_TOKEN)
+#replicate = Client(api_token=REPLICATE_API_TOKEN)
 # API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
 
