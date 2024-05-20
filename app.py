@@ -291,7 +291,7 @@ def main():
   # Display or clear chat messages
   if st.button("Generate Caption"):
     for message in st.session_state.messages:
-      with st.chat_message(message["role"]]):
+      with st.chat_message(message["role"]):
         st.write(message["content"])
 
     # result = model(input_text)
