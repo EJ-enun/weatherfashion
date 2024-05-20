@@ -34,6 +34,30 @@ INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
+# Set assistant icon to Snowflake logo
+icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
+
+# App title
+st.set_page_config(page_title="Snowflake Arctic")
+
+# Replicate Credentials
+with st.sidebar:
+    st.title('Snowflake Arctic')
+    if 'REPLICATE_API_TOKEN' in st.secrets:
+        #st.success('API token loaded!', icon='✅')
+        replicate_api = st.secrets['REPLICATE_API_TOKEN']
+    else:
+        replicate_api = st.text_input('Enter Replicate API token:', type='password')
+        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
+            st.warning('Please enter your Replicate API token.', icon='⚠️')
+            st.markdown("**Don't have an API token?** Head over to [Replicate](https://replicate.com) to sign up for one.")
+        #else:
+        #    st.success('API token loaded!', icon='✅')
+
+    os.environ['REPLICATE_API_TOKEN'] = replicate_api
+    st.subheader("Adjust model parameters")
+    temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
+    top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
 
 
 #def fetchForecast(lat, lon, apikey):
@@ -186,53 +210,145 @@ def get_location(address):
         else:
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
+st.sidebar.button('Clear chat history', on_click=clear_chat_history)
+
+st.sidebar.caption('Built by [Snowflake](https://snowflake.com/) to demonstrate [Snowflake Arctic](https://www.snowflake.com/blog/arctic-open-and-efficient-foundation-language-models-snowflake). App hosted on [Streamlit Community Cloud](https://streamlit.io/cloud). Model hosted by [Replicate](https://replicate.com/snowflake/snowflake-arctic-instruct).')
+
+@st.cache_resource(show_spinner=False)
+def get_tokenizer():
+    """Get a tokenizer to make sure we're not sending too much text
+    text to the Model. Eventually we will replace this with ArcticTokenizer
+    """
+    return AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+
+def get_num_tokens(prompt):
+    """Get the number of tokens in a given prompt"""
+    tokenizer = get_tokenizer()
+    tokens = tokenizer.tokenize(prompt)
+    return len(tokens)
+
+# Function for generating Snowflake Arctic response
+def generate_arctic_response():
+    prompt = []
+    for dict_message in st.session_state.messages:
+        if dict_message["role"] == "user":
+            prompt.append("<|im_start|>user\n" + dict_message["content"] + "<|im_end|>")
+        else:
+            prompt.append("<|im_start|>assistant\n" + dict_message["content"] + "<|im_end|>")
+    
+    prompt.append("<|im_start|>assistant")
+    prompt.append("")
+    prompt_str = "\n".join(prompt)
+    
+    if get_num_tokens(prompt_str) >= 3072:
+        st.error("Conversation length too long. Please keep it under 3072 tokens.")
+        st.button('Clear chat history', on_click=clear_chat_history, key="clear_chat_history")
+        st.stop()
+
+    for event in replicate.stream("snowflake/snowflake-arctic-instruct",
+                           input={"prompt": prompt_str,
+                                  "prompt_template": r"{prompt}",
+                                  "temperature": temperature,
+                                  "top_p": top_p,
+                                  }):
+        yield str(event)
+
+	
 # Load the text-to-caption model
-model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
+#model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
 # Load the image-to-text model
 model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
 
 def main():
-    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
-    htp="https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    st.image(htp, caption = 'Dress for the Weather, Impress with Style.')
-    set_background_color('#fffbec')
-    address = st.text_input("Address:")
-    weather = None
-    options = ["Male", "Female", "Non-binary"]
-    selected_options = st.multiselect("Choose your options:", options)
-    weather = "Cloudy"
-    if st.button('GO'):
-        weather = get_location(address)
-        st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
-    text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
-    if st.button("Generate Image"):
-        if text_prompt:
-            get_fits = text_prompt.split(",")
-            count_list = len(get_fits)
-            model_input = ", ".join(get_fits)
-            prompt = f"Create {count_list} separate outfits for {selected_options} based on each description: {model_input}"
-            try:
-                payload = {"inputs": prompt}
-                image_data = query_stable_diff(payload)
-                image = Image.open(io.BytesIO(image_data))
-                st.image(image, caption="Generated Image")
-            except Exception as e:
-                st.error(f"Error generating image: {e}")
-        else:
-            st.warning("Please enter a description.")
-    st.write("Fun Image Captioning")
-    uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        if image.mode == 'RGBA':
-            image = image.convert('RGB')
-        st.image(image, caption="Uploaded Image", use_column_width=True)
-    st.write("Text-to-Caption")
-    input_text = st.text_input("Enter your text:")
-    if st.button("Generate Caption"):
-        result = model(input_text)
-        st.write("Caption:", result)
+  image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
+  htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
+  st.image(htp, caption='Dress for the Weather, Impress with Style.')
+  set_background_color('#fffbec')
+
+  address = st.text_input("Address:")
+  weather = None
+  options = ["Male", "Female", "Non-binary"]
+  selected_options = st.multiselect("Choose your options:", options)
+  weather = "Cloudy"
+
+  if st.button('GO'):
+    weather = get_location(address)
+    st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
+
+  text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
+  if st.button("Generate Image"):
+    if text_prompt:
+      get_fits = text_prompt.split(",")
+      count_list = len(get_fits)
+      model_input = ", ".join(get_fits)
+      prompt = f"Create {count_list} separate outfits for {selected_options} based on each description: {model_input}"
+      try:
+        payload = {"inputs": prompt}
+        image_data = query_stable_diff(payload)
+        image = Image.open(io.BytesIO(image_data))
+        st.image(image, caption="Generated Image")
+      except Exception as e:
+        st.error(f"Error generating image: {e}")
+    else:
+      st.warning("Please enter a description.")
+
+  st.write("Fun Image Captioning")
+  uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+  if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    if image.mode == 'RGBA':
+      image = image.convert('RGB')
+    st.image(image, caption="Uploaded Image", use_column_width=True)
+
+  st.write("Text-to-Caption")
+  input_text = st.text_input("Enter your text:")
+
+  for event in replicate.stream(
+      "snowflake/snowflake-arctic-instruct",
+      input={
+          "top_k": 50,
+          "top_p": 0.9,
+          "prompt": input_text,
+          "temperature": 0.2,
+          "max_new_tokens": 512,
+          "min_new_tokens": 0,
+          "stop_sequences": "<|im_end|>",
+          "prompt_template": "<|im_start|>system\nYou're a helpful assistant<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n\n<|im_start|>assistant\n",
+          "presence_penalty": 1.15,
+          "frequency_penalty": 0.2
+      },
+  ):
+    print(str(event), end="")
+
+  # Store LLM-generated responses
+  if "messages" not in st.session_state.keys():
+    st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
+
+  # Display or clear chat messages
+  if st.button("Generate Caption"):
+    for message in st.session_state.messages:
+      with st.chat_message(message["role"], avatar=icons[message["role"]]):
+        st.write(message["content"])
+
+    # result = model(input_text)
+    # st.write("Caption:", result)
+
+  # User-provided prompt
+  if prompt := st.chat_input(disabled=not replicate_api):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user", avatar="⛷️"):
+      st.write(prompt)
+
+   # Generate a new response if last message is not from assistant
+   if st.session_state.messages[-1]["role"] != "assistant":
+       with st.chat_message("assistant", avatar="./Snowflake_Logomark_blue.svg"):
+           response = generate_arctic_response()
+           full_response = st.write_stream(response)
+       message = {"role": "assistant", "content": full_response}
+       st.session_state.messages.append(message)
 
 
 
