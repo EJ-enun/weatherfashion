@@ -223,7 +223,7 @@ def main():
   set_logo()
   set_background_color('#fffbec')
   get_replicate_api_token()
-  load_dotenv()
+  #load_dotenv()
   import replicate
   
   address = st.text_input("Address:")
