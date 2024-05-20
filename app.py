@@ -9,8 +9,9 @@ from transformers import pipeline, AutoTokenizer
 import os
 from replicate.client import Client
 
-replicate = Client(api_token=REPLICATE_API_TOKEN)
+
 REPLICATE_API_TOKEN='r8_B9vWqzITgJ1KAM11WADipsMESzL91uR0HMLDs'
+replicate = Client(api_token=REPLICATE_API_TOKEN)
 # API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
 
