@@ -272,6 +272,7 @@ def main():
   if uploaded_file is not None:
     data = base64.b64encode(uploaded_file.read()).decode('utf-8')
     img = f"data:application/octet-stream;base64,{data}"
+    st.write(img)
     image = Image.open(uploaded_file)
     if image.mode == 'RGBA':
        image = image.convert('RGB')
