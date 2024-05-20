@@ -275,10 +275,10 @@ def main():
        image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
-	file_bytes = uploaded_file.read()
+        file_bytes = uploaded_file.read()
         data = base64.b64encode(file_bytes).decode('utf-8')
-        image = f"data:application/octet-stream;base64,{data}"
-        get_blip_output(image)
+        img = f"data:application/octet-stream;base64,{data}"
+        get_blip_output(img)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
   if st.button("Generate Caption"):
