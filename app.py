@@ -278,17 +278,16 @@ def main():
     if image.mode == 'RGBA':
        image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
+    out_blip = None
     if st.button('Generate'):
-        get_blip_output(img)
-  input_text = st.text_input("Enter your text:")
-  # Display or clear chat messages
-  if st.button("Generate Caption"):
+        out_blip = get_blip_output(img)
+
     for event in replicate.stream(
       "snowflake/snowflake-arctic-instruct",
       input={
           "top_k": 50,
           "top_p": 0.9,
-          "prompt": f" Create an instagram worthy caption from the following: {input_text}",
+          "prompt": f" Create an instagram worthy caption from the following text: {out_blip}",
           "temperature": 0.2,
           "max_new_tokens": 512,
           "min_new_tokens": 0,
