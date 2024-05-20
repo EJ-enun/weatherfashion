@@ -274,10 +274,9 @@ def main():
        image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
-        buffered = io.BytesIO()
-        image.save(buffered, format="JPEG")
-        img_byte_arr = base64.b64encode(buffered.getvalue()).decode()
-        get_blip_output(img_byte_arr)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as f:
+        image.save(f, "JPEG")
+        get_blip_output(f.name)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
   if st.button("Generate Caption"):
