@@ -214,12 +214,20 @@ def generate_arctic_response():
 
 # Load the image-to-text model
 #model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
-captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-large")
-
-# Generate a caption for the Image input
+#captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-large")
 
 
 
+def get_blip_output(input):
+   input = {
+    "image": "https://replicate.delivery/mgxm/f4e50a7b-e8ca-432f-8e68-082034ebcc70/demo.jpg"
+}
+
+   output = replicate.run(
+    "salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
+    input=input
+)
+   st.write(output)
 
 
 
@@ -268,8 +276,8 @@ def main():
       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
-       cap = captioner(image) 
-       st.write(cap)
+       get_blip_output(image) 
+       #st.write(cap)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
   if st.button("Generate Caption"):
