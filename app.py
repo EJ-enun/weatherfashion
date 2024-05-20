@@ -7,7 +7,7 @@ from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
 from transformers import pipeline, AutoTokenizer
 import os
-from replicate.client import Client
+#from replicate.client import Client
 
 
 REPLICATE_API_TOKEN='r8_70DiHD1crmyex93p560AlTEP8YLzSjR1AupYr'
@@ -226,7 +226,7 @@ def main():
   set_background_color('#fffbec')
   get_replicate_api_token()
   #load_dotenv()
-  #import replicate
+  import replicate
   
   address = st.text_input("Address:")
 	
