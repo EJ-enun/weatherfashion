@@ -345,12 +345,14 @@ def main():
       st.write(prompt)
 
    # Generate a new response if last message is not from assistant
-   if st.session_state.messages[-1]["role"] != "assistant":
-       with st.chat_message("assistant", avatar="./Snowflake_Logomark_blue.svg"):
-           response = generate_arctic_response()
-           full_response = st.write_stream(response)
-       message = {"role": "assistant", "content": full_response}
-       st.session_state.messages.append(message)
+   # Generate a new response if last message is not from assistant
+  if st.session_state.messages[-1]["role"] != "assistant":
+      with st.chat_message("assistant", avatar="./Snowflake_Logomark_blue.svg"):
+          response = generate_arctic_response()
+          full_response = st.write_stream(response)
+      message = {"role": "assistant", "content": full_response}
+      st.session_state.messages.append(message)
+
 
 
 
