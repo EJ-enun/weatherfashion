@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import replicate
 from PIL import Image
 import base64
 import io
@@ -227,7 +228,7 @@ def main():
   set_background_color('#fffbec')
   get_replicate_api_token()
   #load_dotenv()
-  import replicate
+  
   
   address = st.text_input("Address:")
 	
