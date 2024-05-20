@@ -271,7 +271,7 @@ def main():
   if uploaded_file is not None:
     image = Image.open(uploaded_file)
     if image.mode == 'RGBA':
-      #image = image.convert('RGB')
+       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
         buffered = io.BytesIO()
