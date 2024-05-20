@@ -5,7 +5,9 @@ import base64
 import io
 from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer
+import replicate
+import os
 
 #model = AutoModelForCausalLM.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
