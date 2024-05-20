@@ -39,7 +39,8 @@ headers = {"Authorization": "Bearer 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"}
 
 
 def get_replicate_api_token():
-    os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
+    #os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
+    os.environ['REPLICATE_API_TOKEN'] = 'r8_C0S96Qg9kqLkNy0ilfcOfuRyBPZ2u4f1JTX6P'
 
 
 def fetchForecast(lat, lon, apikey):
