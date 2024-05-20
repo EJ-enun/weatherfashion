@@ -8,6 +8,7 @@ from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
 from transformers import pipeline, AutoTokenizer
 import os
+import tempfile
 #from replicate.client import Client
 
 
