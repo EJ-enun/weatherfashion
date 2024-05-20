@@ -289,9 +289,8 @@ def main():
           "presence_penalty": 1.15,
           "frequency_penalty": 0.2
       },
-  ):
-    print(str(event), end="")
-    st.write(message["content"])
+  ):st.write(str(event), end="")
+      
 
     # result = model(input_text)
     # st.write("Caption:", result)
