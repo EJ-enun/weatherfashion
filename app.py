@@ -221,10 +221,12 @@ def generate_arctic_response():
 
 def get_blip_output(inp):
    
-
+   input = {
+    "image": inp
+}
    output = replicate.run(
     "salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
-    input=inp
+    input=input
 )
    st.write(output)
 
@@ -272,7 +274,6 @@ def main():
   if uploaded_file is not None:
     data = base64.b64encode(uploaded_file.read()).decode('utf-8')
     img = f"data:application/octet-stream;base64,{data}"
-    st.write(img)
     image = Image.open(uploaded_file)
     if image.mode == 'RGBA':
        image = image.convert('RGB')
