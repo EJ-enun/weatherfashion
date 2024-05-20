@@ -7,8 +7,9 @@ from io import BytesIO
 from opencage.geocoder import OpenCageGeocode
 from transformers import pipeline, AutoTokenizer
 import os
+from replicate.client import Client
 
-#model = AutoModelForCausalLM.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
+replicate = Client(api_token=REPLICATE_API_TOKEN)
 REPLICATE_API_TOKEN='r8_B9vWqzITgJ1KAM11WADipsMESzL91uR0HMLDs'
 # API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
@@ -224,7 +225,7 @@ def main():
   set_background_color('#fffbec')
   get_replicate_api_token()
   #load_dotenv()
-  import replicate
+  #import replicate
   
   address = st.text_input("Address:")
 	
