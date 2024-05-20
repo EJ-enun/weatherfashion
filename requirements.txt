@@ -1,7 +1,7 @@
 streamlit
 opencage
 transformers
-#tf-keras
+tf-keras
 replicate
 #torch
-tensorflow
+#tensorflow
