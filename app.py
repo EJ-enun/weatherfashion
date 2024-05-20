@@ -209,14 +209,6 @@ def generate_arctic_response():
                                   }):
         yield str(event)
 
-	
-# Load the text-to-caption model
-#model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
-
-# Load the image-to-text model
-#model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
-#captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-large")
-
 
 
 def get_blip_output(inp):
@@ -230,28 +222,24 @@ def get_blip_output(inp):
 )
    st.write(output)
 
-
-
-
-def main():
-  st.sidebar.button('Clear chat history', on_click=clear_chat_history)
-  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
-  set_logo()
-  set_background_color('#fffbec')
-  get_replicate_api_token()
-  #load_dotenv()
-  
-  
+def address():
   address = st.text_input("Address:")
-	
   options = ["Male", "Female", "Non-binary"]
   selected_options = st.multiselect("Choose your options:", options)
-
-
   if st.button('GO'):
     weather = get_location(address)
     st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
 
+
+
+def main():
+  st.sidebar.button('Reset App', on_click=clear_chat_history)
+  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  set_logo()
+  set_background_color('#fffbec')
+  get_replicate_api_token()
+  address()
+  
   text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
   if st.button("Generate Image"):
     if text_prompt:
