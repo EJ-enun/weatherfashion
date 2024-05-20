@@ -39,13 +39,9 @@ headers = {"Authorization": "Bearer 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"}
 icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
 
+def get_replicate_api_token():
+    os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
 
-
-#def fetchForecast(lat, lon, apikey):
-#    url = "https://api.climacell.co/v3/weather/nowcast"
-#    querystring = {"lat":lat,"lon":lon,"unit_system":"si","start_time":"now","fields":"temp,feels_like,weather_code,precipitation,precipitation_type","apikey":apikey}
-#    response = requests.request("GET", url, params=querystring)
-#    return response.json()
 
 def fetchForecast(lat, lon, apikey):
     url = "http://api.weatherapi.com/v1/current.json"
@@ -243,12 +239,18 @@ def generate_arctic_response():
 # Load the image-to-text model
 model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
 
+
+
+
+
+
+
 def main():
   image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
   htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
   st.image(htp, caption='Dress for the Weather, Impress with Style.')
   set_background_color('#fffbec')
-
+  get_replicate_api_token()
   address = st.text_input("Address:")
   weather = None
   options = ["Male", "Female", "Non-binary"]
@@ -283,7 +285,6 @@ def main():
     if image.mode == 'RGBA':
       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
-  os.environ['REPLICATE_API_TOKEN'] = REPLICATE_API_TOKEN
   st.write("Text-to-Caption")
   input_text = st.text_input("Enter your text:")
 
