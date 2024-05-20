@@ -3,3 +3,4 @@ opencage
 transformers
 #tf-keras
 replicate
+torch
