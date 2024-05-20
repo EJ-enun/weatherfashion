@@ -10,8 +10,7 @@ import replicate
 import os
 
 #model = AutoModelForCausalLM.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
-
-
+REPLICATE_API_TOKEN='r8_B9vWqzITgJ1KAM11WADipsMESzL91uR0HMLDs'
 # API key from: https://opencagedata.com
 key = 'ca22f9473b824f59a109ed0e60d9e551'
 
@@ -40,14 +39,14 @@ headers = {"Authorization": "Bearer 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"}
 icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
 # App title
-st.set_page_config(page_title="Snowflake Arctic")
+#st.set_page_config(page_title="Snowflake Arctic")
 
 # Replicate Credentials
 with st.sidebar:
-    st.title('Snowflake Arctic')
+    #st.title('Snowflake Arctic')
     if 'REPLICATE_API_TOKEN' in st.secrets:
         #st.success('API token loaded!', icon='✅')
-        replicate_api = st.secrets['REPLICATE_API_TOKEN']
+        replicate_api = REPLICATE_API_TOKEN
     else:
         replicate_api = st.text_input('Enter Replicate API token:', type='password')
         if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
