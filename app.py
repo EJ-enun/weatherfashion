@@ -267,7 +267,9 @@ def main():
     if image.mode == 'RGBA':
       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
-    st.write(captioner(image))
+    if st.button('Generate'):
+       cap = captioner(image) 
+       st.write(cap)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
   if st.button("Generate Caption"):
