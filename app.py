@@ -214,7 +214,7 @@ def generate_arctic_response():
 
 # Load the image-to-text model
 #model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
-captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+captioner = pipeline("image-to-text", model="xtuner/llava-phi-3-mini-gguf")
 
 # Generate a caption for the Image input
 
