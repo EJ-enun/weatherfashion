@@ -288,7 +288,7 @@ def main():
   input_text = st.text_input("Enter your text:")
 
   for event in replicate.stream(
-      "snowflake/snowflake-arctic-instruct",
+      "snowflake/snowflake-arctic-instruct",auth=REPLICATE_API_TOKEN,
       input={
           "top_k": 50,
           "top_p": 0.9,
