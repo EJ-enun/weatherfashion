@@ -267,7 +267,15 @@ def main():
   st.write("Text-to-Caption")
   input_text = st.text_input("Enter your text:")
 
-  for event in replicate.stream(
+  
+
+  # Store LLM-generated responses
+  if "messages" not in st.session_state.keys():
+    st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
+
+  # Display or clear chat messages
+  if st.button("Generate Caption"):
+    for event in replicate.stream(
       "snowflake/snowflake-arctic-instruct",
       input={
           "top_k": 50,
@@ -283,16 +291,7 @@ def main():
       },
   ):
     print(str(event), end="")
-
-  # Store LLM-generated responses
-  if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
-
-  # Display or clear chat messages
-  if st.button("Generate Caption"):
-    for message in st.session_state.messages:
-      with st.chat_message(message["role"]):
-        st.write(message["content"])
+    st.write(message["content"])
 
     # result = model(input_text)
     # st.write("Caption:", result)
