@@ -214,6 +214,9 @@ def generate_arctic_response():
 
 # Load the image-to-text model
 #model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
+captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+
+# Generate a caption for the Image input
 
 
 
@@ -264,15 +267,8 @@ def main():
     if image.mode == 'RGBA':
       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
-  st.write("Text-to-Caption")
+    st.write(captioner(image))
   input_text = st.text_input("Enter your text:")
-
-  
-
-  # Store LLM-generated responses
-  if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
-
   # Display or clear chat messages
   if st.button("Generate Caption"):
     for event in replicate.stream(
