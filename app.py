@@ -47,10 +47,10 @@ with st.sidebar:
     if 'REPLICATE_API_TOKEN' in st.secrets:
         #st.success('API token loaded!', icon='✅')
         replicate_api = REPLICATE_API_TOKEN
-	os.environ['REPLICATE_API_TOKEN'] = replicate_api
-        st.subheader("Adjust model parameters")
-        temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
-        top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
+        os.environ['REPLICATE_API_TOKEN'] = replicate_api
+        #st.subheader("Adjust model parameters")
+        #temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
+        #top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
     else:
         replicate_api = st.text_input('Enter Replicate API token:', type='password')
         if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
