@@ -275,7 +275,7 @@ def main():
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
         with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as f:
-        image.save(f, "JPEG")
+           image.save(f, "JPEG")
         get_blip_output(f.name)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
