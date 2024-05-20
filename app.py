@@ -270,13 +270,13 @@ def main():
   st.write("Fun Image Captioning")
   uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
   if uploaded_file is not None:
+    data = base64.b64encode(uploaded_file.read()).decode('utf-8')
+    img = f"data:application/octet-stream;base64,{data}"
     image = Image.open(uploaded_file)
     if image.mode == 'RGBA':
        image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     if st.button('Generate'):
-        data = base64.b64encode(uploaded_file.read()).decode('utf-8')
-        img = f"data:application/octet-stream;base64,{data}"
         get_blip_output(img)
   input_text = st.text_input("Enter your text:")
   # Display or clear chat messages
