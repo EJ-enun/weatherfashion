@@ -287,7 +287,7 @@ def main():
       input={
           "top_k": 50,
           "top_p": 0.9,
-          "prompt": f" Create an instagram worthy caption from the following text: {out_blip}",
+          "prompt": f" write a fun caption about {out_blip}",
           "temperature": 0.2,
           "max_new_tokens": 512,
           "min_new_tokens": 0,
