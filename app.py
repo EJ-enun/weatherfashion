@@ -279,7 +279,7 @@ def main():
         buffered = io.BytesIO()
         image.save(buffered, format="JPEG")
         img_byte_arr = buffered.getvalue()
-        data = base64.b64encode(image).decode('utf-8')
+        data = base64.b64encode(img_byte_arr).decode('utf-8')
         image = f"data:application/octet-stream;base64,{data}"
         get_blip_output(image)
   input_text = st.text_input("Enter your text:")
