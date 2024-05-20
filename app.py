@@ -20,7 +20,7 @@ API_WEATHER = "f0e196555010406d81c233044241305"
 #API key from: huggingface.co
 ACCESS_TOKEN = "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"
 
-st.title('Climate Couture')
+st.title('MeteoroloChic')
 st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
 
 
@@ -39,7 +39,7 @@ headers = {"Authorization": "Bearer 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"}
 icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
 
-os.environ['REPLICATE_API_TOKEN'] = REPLICATE_API_TOKEN
+
 
 #def fetchForecast(lat, lon, apikey):
 #    url = "https://api.climacell.co/v3/weather/nowcast"
@@ -283,7 +283,7 @@ def main():
     if image.mode == 'RGBA':
       image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
-
+  os.environ['REPLICATE_API_TOKEN'] = REPLICATE_API_TOKEN
   st.write("Text-to-Caption")
   input_text = st.text_input("Enter your text:")
 
