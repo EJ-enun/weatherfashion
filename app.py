@@ -35,8 +35,6 @@ INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
-# Set assistant icon to Snowflake logo
-icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
 
 def get_replicate_api_token():
@@ -87,17 +85,20 @@ def set_background_color(color):
     '''
     st.markdown(background_color, unsafe_allow_html=True)
 
-def set_logo(logo):
+def set_logo():
 
     # Relative path to your logo in your GitHub repository
-    logo_path = "path_to_your_logo/logo.png"
+    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
+    htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
+    
+  
 
     # Create three columns
     col1, col2, col3 = st.columns([1,6,1])
 
     # Display the logo in the middle column
     with col2:
-        return st.image(logo, width=200)
+        return st.image(htp, caption='Dress for the Weather, Impress with Style.')
 
 
 
@@ -112,18 +113,6 @@ def consumeOne(forecast):
     return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code, "precipitation_type":precipitation_type}
 
 
-#def consumeOne(forecast):
-    #condition_text = forecast["current"]["condition"]["text"]
-    
-    #precipitation_type = get_precipitation_type(condition_text)
-    #return print(type(forecast), forecast)
-	#{
-    #"temp": forecast["current"]["temp_c"],
-    #"feel": forecast["current"]["feelslike_c"],
-    #"precipitation": forecast["current"]["precip_mm"],
-    #"precipitation_type": precipitation_type,
-    #"weather_code": forecast["current"]["condition"]["code"],
-    #}
 
 def clothing(inp):
     umbrella = inp["is_rainy"] or inp["is_snowy"]
@@ -151,22 +140,6 @@ def clothing(inp):
 
     return {"top": top, "sunscreen": sunscreen, "umbrella": umbrella }
 
-#forecasts = fetchForecast(lat, lng, API_WEATHER)
-#parsed_forecasts = list(map(consumeOne, forecasts))
-#parsed_forecasts = consumeOne(fetchForecast(lat, lng, API_WEATHkbshoiej9y0e3uER))
-
-def inputs(inp):
-    return
-#mintemp = min(list(map(lambda f: f["temp"], parsed_forecasts)))
-#maxtemp = max(list(map(lambda f: f["temp"], parsed_forecasts)))
-
-#minfeel = min(list(map(lambda f: f["feel"], parsed_forecasts)))
-#maxfeel = max(list(map(lambda f: f["feel"], parsed_forecasts)))
-
-#is_sunny = any(list(map(lambda f: f["weather_code"]=='clear', parsed_forecasts)))
-#is_rainy = any(list(map(lambda f: 'rain' in f["weather_code"], parsed_forecasts)))
-#is_snowy = any(list(map(lambda f: 'snow' in f["weather_code"], parsed_forecasts)))
-
 
 
 def query_stable_diff(payload):
@@ -187,11 +160,11 @@ def get_location(address):
         else:
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+
+
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
-st.sidebar.button('Clear chat history', on_click=clear_chat_history)
 
-st.sidebar.caption('Built by [Snowflake](https://snowflake.com/) to demonstrate [Snowflake Arctic](https://www.snowflake.com/blog/arctic-open-and-efficient-foundation-language-models-snowflake). App hosted on [Streamlit Community Cloud](https://streamlit.io/cloud). Model hosted by [Replicate](https://replicate.com/snowflake/snowflake-arctic-instruct).')
 
 @st.cache_resource(show_spinner=False)
 def get_tokenizer():
@@ -237,7 +210,7 @@ def generate_arctic_response():
 #model = pipeline("text-generation", model="Snowflake/snowflake-arctic-instruct", trust_remote_code=True)
 
 # Load the image-to-text model
-model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
+#model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
 
 
 
@@ -246,16 +219,17 @@ model_ydshieh = pipeline('image-to-text', model='ydshieh/vit-gpt2-coco-en')
 
 
 def main():
-  image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
-  htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-  st.image(htp, caption='Dress for the Weather, Impress with Style.')
+  st.sidebar.button('Clear chat history', on_click=clear_chat_history)
+  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  set_logo()
   set_background_color('#fffbec')
   get_replicate_api_token()
+  
   address = st.text_input("Address:")
-  weather = None
+	
   options = ["Male", "Female", "Non-binary"]
   selected_options = st.multiselect("Choose your options:", options)
-  weather = "Cloudy"
+
 
   if st.button('GO'):
     weather = get_location(address)
