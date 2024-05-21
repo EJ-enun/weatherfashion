@@ -213,9 +213,8 @@ def address():
   address = st.text_input("Address:")
   if st.button('GO'):
     weather = get_location(address)
-    set_gen_image_load()
     st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
-
+    set_gen_image_load()
 def wardrobe(selected_options):
   text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
   if st.button("Generate Image"):
