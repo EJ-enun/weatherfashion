@@ -264,7 +264,7 @@ def main():
   st.title('MeteoroloChic')
   st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
   st.sidebar.button('Reset App', on_click=clear_chat_history)
-  st.subheader("Adjust Photo Caption model parameters")
+  #st.subheader("Adjust Photo Caption model parameters")
   temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
   top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
   st.sidebar.caption('Built by Enun Jay at www.devpost.com/enunenun21')
