@@ -195,7 +195,7 @@ def get_blip_output(inp):
     "salesforce/blip:2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
     input=input
 )
-   st.write(output)
+   st.write(f'Salesforce/Blip {output}')
 
 def address():
   address = st.text_input("Address:")
@@ -250,7 +250,9 @@ def image_captions(temp, top_p):
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):st.write(str(event))
+      ):event_str = str(event)
+        event_str = event_str.replace('\n', ' ')  # Replace newline characters with spaces
+	st.write(f'Snowflake Arctic Response: {(event_str)}')
   
 
 def reset_app():
@@ -264,7 +266,7 @@ def main():
   st.subheader("Adjust Photo Caption model parameters")
   temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
   top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-13b99519a')
+  st.sidebar.caption('Built by Enun Jay at www.devpost.com/enunenun21')
   set_logo()
   set_background_color('#fffbec')
   options = ["Male", "Female", "Non-binary"]
