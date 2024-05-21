@@ -238,9 +238,9 @@ def wardrobe(selected_options):
 
 
 def image_captions():
-  st.write("PicBabble Slogan: Speak the Language of Your Photos")
+  st.write("Captivating Captions: English Language Captions for Your Instagram worthy photos")
   #st.write("Generate a Caption for Every Instagram Picture ")
-  uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+  uploaded_file = st.file_uploader(""Generate a Caption for your Picture", type=["png", "jpg", "jpeg"])
   if uploaded_file is not None:
     data = base64.b64encode(uploaded_file.read()).decode('utf-8')
     img = f"data:application/octet-stream;base64,{data}"
