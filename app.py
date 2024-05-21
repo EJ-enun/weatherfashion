@@ -256,7 +256,7 @@ def image_captions():
 
 def reset_app():
   http = "https://weatherfashion.streamlit.app/"
-  return webbrowser.open(app_url)
+  return webbrowser.open(http)
 
 def main():
   st.title('MeteoroloChic')
