@@ -241,15 +241,19 @@ def image_captions(temp, top_p):
           input={
               "top_k": 50,
               "top_p": top_p,
-              "prompt": f" write a social media post caption about {out_blip}",
+              "prompt": f" I want a social media post caption about {out_blip}",
               "temperature": temp,
               "max_new_tokens": 512,
               "min_new_tokens": 0,
               "stop_sequences": "<|im_end|>",
+              "prompt_template": "<|im_start|>system\nYou're a helpful assistant<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n\n<|im_start|>assistant\n",
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):st.write(f'Snowflake Arctic Response: {event}')
+      ):
+        event_str = str(event)
+        event_str = event_str.replace('\n', ' ')  # Replace newline characters with spaces
+        st.write(f'Snowflake Arctic Response: {(event_str)}')
   
 
 def reset_app():
