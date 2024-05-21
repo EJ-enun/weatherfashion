@@ -249,7 +249,7 @@ def image_captions(temp, top_p):
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):st.write(f'Snowflake Arctic Response: {event_str}')
+      ):st.write(f'Snowflake Arctic Response: {event}')
   
 
 def reset_app():
