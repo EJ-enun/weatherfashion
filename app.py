@@ -213,6 +213,7 @@ def address():
   address = st.text_input("Address:")
   if st.button('GO'):
     weather = get_location(address)
+    set_gen_image_load()
     st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
 
 def wardrobe(selected_options):
@@ -275,7 +276,6 @@ def main():
   selected_options = st.multiselect("Choose Gender:", options)
   get_replicate_api_token()
   address()
-  set_gen_image_load()
   wardrobe(options)
   image_captions()
 
