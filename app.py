@@ -230,16 +230,7 @@ def address():
     weather = get_location(address)
     st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
 
-
-
-def main():
-  st.sidebar.button('Reset App', on_click=clear_chat_history)
-  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
-  set_logo()
-  set_background_color('#fffbec')
-  get_replicate_api_token()
-  address()
-  
+def wardrobe():
   text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
   if st.button("Generate Image"):
     if text_prompt:
@@ -256,6 +247,17 @@ def main():
         st.error(f"Error generating image: {e}")
     else:
       st.warning("Please enter a description.")
+  
+
+
+def main():
+  st.sidebar.button('Reset App', on_click=clear_chat_history)
+  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  set_logo()
+  set_background_color('#fffbec')
+  get_replicate_api_token()
+  address()
+  wardrobe()
 
   st.write("Fun Image Captioning")
   uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
