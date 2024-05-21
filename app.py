@@ -261,7 +261,7 @@ def reset_app():
 def main():
   st.title('MeteoroloChic')
   st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
-  st.sidebar.button('Reset App', on_click=reset_app())
+  st.sidebar.button('Reset App', on_click=clear_chat_history)
   st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-13b99519a')
   set_logo()
   set_background_color('#fffbec')
