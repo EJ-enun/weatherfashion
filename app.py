@@ -222,7 +222,7 @@ def wardrobe(selected_options):
       st.warning("Please enter a description.")
 
 
-def image_captions():
+def image_captions(temp, top_p):
   st.write("Captivating Captions: English Language Captions for Your Instagram worthy photos")
   #st.write("Generate a Caption for Every Instagram Picture ")
   uploaded_file = st.file_uploader("Generate a Caption for your Picture", type=["png", "jpg", "jpeg"])
@@ -241,9 +241,9 @@ def image_captions():
       "snowflake/snowflake-arctic-instruct",
       input={
           "top_k": 50,
-          "top_p": 0.9,
+          "top_p": top_p,
           "prompt": f" write a fun caption about {out_blip}",
-          "temperature": 0.2,
+          "temperature": temp,
           "max_new_tokens": 512,
           "min_new_tokens": 0,
           "stop_sequences": "<|im_end|>",
@@ -262,6 +262,9 @@ def main():
   st.title('MeteoroloChic')
   st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
   st.sidebar.button('Reset App', on_click=clear_chat_history)
+  st.subheader("Adjust Photo Caption model parameters")
+  temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
+  top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
   st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-13b99519a')
   set_logo()
   set_background_color('#fffbec')
@@ -270,7 +273,7 @@ def main():
   get_replicate_api_token()
   address()
   wardrobe(options)
-  image_captions()
+  image_captions(temperature, top_p)
 
 if __name__ == "__main__":
     main()
