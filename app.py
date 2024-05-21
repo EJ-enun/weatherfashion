@@ -241,7 +241,7 @@ def image_captions(temp, top_p):
           input={
               "top_k": 50,
               "top_p": top_p,
-              "prompt": f" I want a social media post caption about {out_blip}",
+              "prompt": f" Write a social media post caption using {out_blip}",
               "temperature": temp,
               "max_new_tokens": 512,
               "min_new_tokens": 0,
