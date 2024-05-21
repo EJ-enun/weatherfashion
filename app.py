@@ -241,7 +241,7 @@ def image_captions(temp, top_p):
           input={
               "top_k": 50,
               "top_p": top_p,
-              "prompt": f" write a fun caption about {out_blip}",
+              "prompt": f" I want a social media post caption about {out_blip}",
               "temperature": temp,
               "max_new_tokens": 512,
               "min_new_tokens": 0,
@@ -250,7 +250,7 @@ def image_captions(temp, top_p):
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):st.write(str(event), end="")
+      ):st.write(str(event))
   
 
 def reset_app():
