@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st
 import requests
 import replicate
@@ -9,39 +10,28 @@ from opencage.geocoder import OpenCageGeocode
 from transformers import pipeline, AutoTokenizer
 import os
 import tempfile
-#from replicate.client import Client
 
-
+# API keys and tokens are defined
 REPLICATE_API_TOKEN='r8_70DiHD1crmyex93p560AlTEP8YLzSjR1AupYr'
-#replicate = Client(api_token=REPLICATE_API_TOKEN)
-# API key from: https://opencagedata.com
-key = 'ca22f9473b824f59a109ed0e60d9e551'
+key = 'ca22f9473b824f59a109ed0e60d9e551'  # OpenCageData API key
+API_WEATHER = "f0e196555010406d81c233044241305"  # WeatherAPI key
+ACCESS_TOKEN = "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"  # HuggingFace API key
 
-#API key from: https://weatherapi.com
-API_WEATHER = "f0e196555010406d81c233044241305"
-
-#API key from: huggingface.co
-ACCESS_TOKEN = "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"
-# Set page title and icon
+# Streamlit page configuration is set
 st.set_page_config(
     page_title="MeteoroloChic",
     page_icon= "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/filed.png",)
 
-
-
-# Stable Diffusion Inference Endpoint
+# HuggingFace inference endpoint is defined
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
-
-# Access token
-
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
 
-
-
+# Function to get Replicate API token
 def get_replicate_api_token():
     os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
-	
+
+# Function to fetch weather forecast data
 def fetchForecast(lat, lon, apikey):
     url = "http://api.weatherapi.com/v1/current.json"
     querystring = {
@@ -56,10 +46,8 @@ def fetchForecast(lat, lon, apikey):
         print(response.text)
         return {}
 
-
+# Function to get precipitation type
 def get_precipitation_type(condition_text):
-    # Extract the 'condition_text' field from the dictionary
-    #condition_text = condition_dict.get("condition_text", "")
     if "Rain" in condition_text["condition_text"]:
         return "Rain"
     elif "Snow" in condition_text["condition_text"]:
@@ -75,7 +63,7 @@ def get_precipitation_type(condition_text):
     else:
         return "Unknown"
 
-
+# Function to set background color
 def set_background_color(color):
     background_color = f'''
     <style>
@@ -86,18 +74,21 @@ def set_background_color(color):
     '''
     st.markdown(background_color, unsafe_allow_html=True)
 
+# Function to set logo
 def set_logo():
     htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-
     col1, col2, col3 = st.columns([1,6,1])
     with col2:
         return st.image(htp, caption='Dress for the Weather, Impress with Style.')
+
+# Function to set image load
 def set_gen_image_load():
     htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/filed.png"
     col1, col2, col3 = st.columns([1,6,1])
     with col2:
         return st.image(htp, caption='You are almost done, Keep Going!')
 
+# Function to consume forecast data
 def consumeOne(forecast):
     condition_text = forecast["current"]["condition"]["text"]
     weather_code = forecast["current"]["condition"]["code"]
@@ -106,16 +97,13 @@ def consumeOne(forecast):
     precipitation_type = get_precipitation_type({"condition_text": condition_text})
     return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code, "precipitation_type":precipitation_type}
 
-
-
+# Function to determine clothing based on weather
 def clothing(inp):
     umbrella = inp["is_rainy"] or inp["is_snowy"]
     sunscreen = inp["is_sunny"]
     top = None # Not set yet
-
     min_temp = min(inp["mintemp"], inp["minfeel"])
     max_temp = max(inp["maxtemp"], inp["maxfeel"])
-
     if min_temp > 15:
         if max_temp< 25:
             top = "T-Shirt"
@@ -131,19 +119,14 @@ def clothing(inp):
             top = "Long Sleeves + Jacket"
         else:
             top = "Long Sleeves"
-
     return {"top": top, "sunscreen": sunscreen, "umbrella": umbrella }
 
-
-
+# Function to query HuggingFace model
 def query_stable_diff(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.content
-	
-def query_ydshieh(payload):
-	response = requests.post(API_URL_ydshieh, headers=headers, json=payload)
-	return response.content
-	
+
+# Function to get location
 def get_location(address):
         geocoder = OpenCageGeocode(key)
         results = geocoder.geocode(address)
@@ -154,6 +137,7 @@ def get_location(address):
         else:
         	st.write('Location not found')
        	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+
 
 
 def clear_chat_history():
