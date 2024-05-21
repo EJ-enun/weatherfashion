@@ -22,9 +22,12 @@ API_WEATHER = "f0e196555010406d81c233044241305"
 
 #API key from: huggingface.co
 ACCESS_TOKEN = "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"
+# Set page title and icon
+st.set_page_config(
+    page_title="MeteoroloChic",
+    page_icon= "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/filed.png",)
 
-st.title('MeteoroloChic')
-st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
+
 
 # Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
@@ -267,6 +270,8 @@ def image_captions():
 
 
 def main():
+  st.title('MeteoroloChic')
+  st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
   st.sidebar.button('Reset App', on_click=clear_chat_history)
   st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
   set_logo()
