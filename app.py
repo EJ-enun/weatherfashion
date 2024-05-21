@@ -198,28 +198,33 @@ def get_blip_output(inp):
    st.write(f'Salesforce/Blip {output}')
 
 def address():
-  address = st.text_input("Address:")
-  if st.button('GO'):
-    weather = get_location(address)
-    st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
-    set_gen_image_load()
+  col1, col2 = st.beta_columns([1,1])
+
+  with col1:
+    address = st.text_input("Address:")
+    if st.button('GO'):
+      weather = get_location(address)
+      st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
+      set_gen_image_load()
 def wardrobe(selected_options):
-  text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
-  if st.button("Generate Image"):
-    if text_prompt:
-      get_fits = text_prompt.split(",")
-      count_list = len(get_fits)
-      model_input = ", ".join(get_fits)
-      prompt = f"Create {count_list} separate human {selected_options} wearing {model_input}"
-      try:
-        payload = {"inputs": prompt}
-        image_data = query_stable_diff(payload)
-        image = Image.open(io.BytesIO(image_data))
-        st.image(image, caption="Generated Image")
-      except Exception as e:
-        st.error(f"Error generating image: {e}")
-    else:
-      st.warning("Please enter a description.")
+  col1, col2 = st.beta_columns([1,1])
+  with col1:
+    text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
+    if st.button("Generate Image"):
+      if text_prompt:
+        get_fits = text_prompt.split(",")
+        count_list = len(get_fits)
+        model_input = ", ".join(get_fits)
+        prompt = f"Create {count_list} separate human {selected_options} wearing {model_input}"
+        try:
+          payload = {"inputs": prompt}
+          image_data = query_stable_diff(payload)
+          image = Image.open(io.BytesIO(image_data))
+          st.image(image, caption="Generated Image")
+        except Exception as e:
+          st.error(f"Error generating image: {e}")
+      else:
+        st.warning("Please enter a description.")
 
 
 def image_captions(temp, top_p):
