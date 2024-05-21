@@ -224,8 +224,6 @@ def get_blip_output(inp):
 
 def address():
   address = st.text_input("Address:")
-  options = ["Male", "Female", "Non-binary"]
-  selected_options = st.multiselect("Choose your options:", options)
   if st.button('GO'):
     weather = get_location(address)
     st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
@@ -253,6 +251,8 @@ def wardrobe():
 def main():
   st.sidebar.button('Reset App', on_click=clear_chat_history)
   st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  options = ["Male", "Female", "Non-binary"]
+  selected_options = st.multiselect("Choose your options:", options)
   set_logo()
   set_background_color('#fffbec')
   get_replicate_api_token()
