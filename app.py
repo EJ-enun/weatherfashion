@@ -287,10 +287,6 @@ def main():
           "frequency_penalty": 0.2
       },
   ):st.write(str(event), end="")
-      
-
-    # result = model(input_text)
-    # st.write("Caption:", result)
 
  
 
