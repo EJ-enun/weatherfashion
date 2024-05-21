@@ -224,19 +224,19 @@ def wardrobe(selected_options):
 
 def image_captions(temp, top_p):
   st.write("Captivating Captions: English Language Captions for Your Instagram worthy photos")
-  #st.write("Generate a Caption for Every Instagram Picture ")
+  # st.write("Generate a Caption for Every Instagram Picture ")
   uploaded_file = st.file_uploader("Generate a Caption for your Picture", type=["png", "jpg", "jpeg"])
   if uploaded_file is not None:
     data = base64.b64encode(uploaded_file.read()).decode('utf-8')
     img = f"data:application/octet-stream;base64,{data}"
     image = Image.open(uploaded_file)
     if image.mode == 'RGBA':
-       image = image.convert('RGB')
+      image = image.convert('RGB')
     st.image(image, caption="Uploaded Image", use_column_width=True)
     out_blip = None
     if st.button('Generate'):
-        out_blip = get_blip_output(img)
-        for event in replicate.stream(
+      out_blip = get_blip_output(img)
+      for event in replicate.stream(
           "snowflake/snowflake-arctic-instruct",
           input={
               "top_k": 50,
@@ -250,9 +250,10 @@ def image_captions(temp, top_p):
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):event_str = str(event)
+      ):
+        event_str = str(event)
         event_str = event_str.replace('\n', ' ')  # Replace newline characters with spaces
-	st.write(f'Snowflake Arctic Response: {(event_str)}')
+        st.write(f'Snowflake Arctic Response: {(event_str)}')
   
 
 def reset_app():
