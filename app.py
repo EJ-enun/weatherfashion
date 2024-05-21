@@ -25,7 +25,9 @@ st.set_page_config(
 
 # HuggingFace inference endpoint is defined
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
-API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
+#API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
+API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+
 headers = {"Authorization": "Bearer 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"}
 
 # Function to get Replicate API token
