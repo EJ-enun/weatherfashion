@@ -198,17 +198,12 @@ def get_blip_output(inp):
    st.write(f'Salesforce/Blip {output}')
 
 def address():
-  col1, col2 = st.columns([1,1])
-
-  with col1:
     address = st.text_input("Address:")
     if st.button('GO'):
       weather = get_location(address)
       st.write(f"Now Let's get you fitted up! Give a detailed description below (color, style, brand) of every clothing which you have that matches the weather.")
       set_gen_image_load()
 def wardrobe(selected_options):
-  col1, col2 = st.columns([1,1])
-  with col1:
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
     if st.button("Generate Image"):
       if text_prompt:
