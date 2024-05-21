@@ -84,18 +84,16 @@ def set_background_color(color):
     st.markdown(background_color, unsafe_allow_html=True)
 
 def set_logo():
-    image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    # Create three columns
-    col1, col2, col3 = st.columns([1,6,1])
 
-    # Display the logo in the middle column
+    col1, col2, col3 = st.columns([1,6,1])
     with col2:
         return st.image(htp, caption='Dress for the Weather, Impress with Style.')
-
-
-
-
+def set_gen_image_load():
+    htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/filed.png"
+    col1, col2, col3 = st.columns([1,6,1])
+    with col2:
+        return st.image(htp, caption='You are almost done, Keep Going!')
 
 def consumeOne(forecast):
     condition_text = forecast["current"]["condition"]["text"]
@@ -277,6 +275,7 @@ def main():
   selected_options = st.multiselect("Choose Gender:", options)
   get_replicate_api_token()
   address()
+  set_gen_image_load()
   wardrobe(options)
   image_captions()
 
