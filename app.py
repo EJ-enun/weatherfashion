@@ -253,7 +253,7 @@ def image_captions(temp, top_p):
       ):
         event_str = str(event)
         event_str = event_str.replace('\n', ' ')  # Replace newline characters with spaces
-        st.write(f'Snowflake Arctic Response: {(event_str)}')
+        st.write(event_str)
   
 
 def reset_app():
