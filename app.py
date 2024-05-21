@@ -235,7 +235,7 @@ def wardrobe(selected_options):
       get_fits = text_prompt.split(",")
       count_list = len(get_fits)
       model_input = ", ".join(get_fits)
-      prompt = f"Create {count_list} separate outfits for {selected_options} based on each description: {model_input}"
+      prompt = f"Create {count_list} separate human {selected_options} wearing {model_input}"
       try:
         payload = {"inputs": prompt}
         image_data = query_stable_diff(payload)
