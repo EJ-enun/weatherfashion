@@ -10,6 +10,7 @@ from opencage.geocoder import OpenCageGeocode
 from transformers import pipeline, AutoTokenizer
 import os
 import tempfile
+import webbrowser
 
 # API keys and tokens are defined
 REPLICATE_API_TOKEN='r8_70DiHD1crmyex93p560AlTEP8YLzSjR1AupYr'
@@ -253,12 +254,15 @@ def image_captions():
   ):st.write(str(event), end="")
   
 
+def reset_app():
+  http = "https://weatherfashion.streamlit.app/"
+  return webbrowser.open(app_url)
 
 def main():
   st.title('MeteoroloChic')
   st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
-  st.sidebar.button('Reset App', on_click=clear_chat_history)
-  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  st.sidebar.button('Reset App', on_click=reset_app())
+  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-13b99519a')
   set_logo()
   set_background_color('#fffbec')
   options = ["Male", "Female", "Non-binary"]
