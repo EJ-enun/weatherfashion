@@ -26,14 +26,10 @@ ACCESS_TOKEN = "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"
 st.title('MeteoroloChic')
 st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
 
-
-API_URL_ydshieh = "https://api-inference.huggingface.co/models/microsoft/kosmos-2-patch14-224"
-
-
-# Set up your Stable Diffusion Inference Endpoint
+# Stable Diffusion Inference Endpoint
 INFERENCE_ENDPOINT = "https://api.huggingface.co/models/stable-diffusion/base-1.0/inference"
 
-# Your access token
+# Access token
 
 API_URL = "https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4"
 headers = {"Authorization": "Bearer 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"}
@@ -42,9 +38,7 @@ headers = {"Authorization": "Bearer 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"}
 
 def get_replicate_api_token():
     os.environ['REPLICATE_API_TOKEN'] = st.secrets['REPLICATE_API_TOKEN']
-    #os.environ['REPLICATE_API_TOKEN'] = 'r8_C0S96Qg9kqLkNy0ilfcOfuRyBPZ2u4f1JTX6P'
-
-
+	
 def fetchForecast(lat, lon, apikey):
     url = "http://api.weatherapi.com/v1/current.json"
     querystring = {
@@ -90,13 +84,8 @@ def set_background_color(color):
     st.markdown(background_color, unsafe_allow_html=True)
 
 def set_logo():
-
-    # Relative path to your logo in your GitHub repository
     image_url = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/OIG.jpg"
     htp = "https://raw.githubusercontent.com/EJ-enun/weatherfashion/main/file.png"
-    
-  
-
     # Create three columns
     col1, col2, col3 = st.columns([1,6,1])
 
@@ -245,20 +234,9 @@ def wardrobe(selected_options):
         st.error(f"Error generating image: {e}")
     else:
       st.warning("Please enter a description.")
-  
 
 
-def main():
-  st.sidebar.button('Reset App', on_click=clear_chat_history)
-  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
-  set_logo()
-  set_background_color('#fffbec')
-  options = ["Male", "Female", "Non-binary"]
-  selected_options = st.multiselect("Choose Gender:", options)
-  get_replicate_api_token()
-  address()
-  wardrobe(options)
-
+def image_captions():
   st.write("Fun Image Captioning")
   uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
   if uploaded_file is not None:
@@ -287,16 +265,20 @@ def main():
           "frequency_penalty": 0.2
       },
   ):st.write(str(event), end="")
-
- 
-
+  
 
 
-
-
-
-
-
+def main():
+  st.sidebar.button('Reset App', on_click=clear_chat_history)
+  st.sidebar.caption('Built by Enun Jay at www.linkedin.com/in/enun-enun-')
+  set_logo()
+  set_background_color('#fffbec')
+  options = ["Male", "Female", "Non-binary"]
+  selected_options = st.multiselect("Choose Gender:", options)
+  get_replicate_api_token()
+  address()
+  wardrobe(options)
+  image_captions()
 
 if __name__ == "__main__":
     main()
