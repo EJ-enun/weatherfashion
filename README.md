@@ -1,8 +1,6 @@
 # MeteoroloCHic
 #Weather Fashion for people who want to look stylish in all weathers.
 
-## README.md for MeteoroloChic
-
 This readme describes MeteoroloChic, a Streamlit application that helps you dress for the weather and generate captions for your outfit photos!
 
 **What it does:**
