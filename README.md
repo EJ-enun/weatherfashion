@@ -33,5 +33,5 @@ MeteoroloChic uses several advanced technologies:
 * Hugging Face API: To generate captions for your photos.
 * Replicate: To generate images of people wearing your outfit descriptions.
 
-We hope you find MeteoroloChic helpful for dressing for the weather and creating stylish social media posts!
+I hope you find MeteoroloChic helpful for dressing for the weather and creating stylish social media posts!
 
