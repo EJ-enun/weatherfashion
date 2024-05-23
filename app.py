@@ -252,11 +252,21 @@ def image_captions(temp, top_p):
               "presence_penalty": 1.15,
               "frequency_penalty": 0.2
           },
-      ):
-        event_str = str(event)
-        event_str = event_str.replace('\n', ' ')  # Replace newline characters with spaces
-        st.write(event_str)
-  
+      ): yield str(event)
+	      
+def display_resp(event):	    
+	
+        # Store LLM-generated responses
+        if "messages" not in st.session_state.keys():
+            st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research."}]
+
+        # Display or clear chat messages
+       
+        for message in st.session_state.messages:
+          with st.chat_message(message["role"]):
+            full_response = st.write_stream(event)
+            st.session_state.messages = [{"role": "assistant", "content":full_response}]
+            st.write(message["content"])
 
 def reset_app():
   http = "https://weatherfashion.streamlit.app/"
@@ -277,7 +287,7 @@ def main():
   get_replicate_api_token()
   address()
   wardrobe(options)
-  image_captions(temperature, top_p)
+  display_resp(image_captions(temperature, top_p))
 
 if __name__ == "__main__":
     main()
