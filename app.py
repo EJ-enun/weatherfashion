@@ -37,17 +37,27 @@ def get_replicate_api_token():
 
 # Function to fetch weather forecast data
 def fetchForecast(lat, lon, apikey):
+    # API endpoint
     url = "http://api.weatherapi.com/v1/current.json"
+    
+    # Parameters for the API request
     querystring = {
-        "key": apikey,
-        "q": f"{lat},{lon}",
+        "key": apikey,  # API key
+        "q": f"{lat},{lon}",  # Latitude and Longitude
     }
+    
+    # Sending a GET request to the API
     response = requests.get(url, params=querystring)
+    
     try:
+        # Attempt to return the response in JSON format
         return response.json()
     except json.JSONDecodeError:
+        # If there's an error in decoding the JSON, print an error message and the response text
         print("Failed to decode API response")
         print(response.text)
+        
+        # Return an empty dictionary in case of an error
         return {}
 
 # Function to get precipitation type
