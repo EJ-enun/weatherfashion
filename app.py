@@ -113,22 +113,45 @@ def set_gen_image_load():
     with col2:
         return st.image(htp, caption='You are almost done, Keep Going!') 
 
-# Function to consume forecast data
+# This function consumes forecast data and extracts relevant information.
 def consumeOne(forecast):
+    # Extracts the text description of the current weather condition from the forecast data
     condition_text = forecast["current"]["condition"]["text"]
+    
+    # Extracts the weather code corresponding to the current weather condition from the forecast data
     weather_code = forecast["current"]["condition"]["code"]
+    
+    # Extracts the current 'feels like' temperature (in Celsius) from the forecast data
     feel = forecast["current"]["feelslike_c"]
+    
+    # Extracts the current precipitation (in mm) from the forecast data
     precipitation = forecast["current"]["precip_mm"]
+    
+    # Determines the type of precipitation (e.g., rain, snow, etc.) based on the condition text
     precipitation_type = get_precipitation_type({"condition_text": condition_text})
+    
+    # Returns a dictionary containing the extracted information
     return {"condition_text": condition_text, "feels_like": feel, "precipitation": precipitation, "weather_code": weather_code, "precipitation_type":precipitation_type}
 
-# Function to determine clothing based on weather
+
+# This function determines the appropriate clothing based on weather conditions.
 def clothing(inp):
+    # Determines if an umbrella is needed based on whether it's rainy or snowy
     umbrella = inp["is_rainy"] or inp["is_snowy"]
+    
+    # Determines if sunscreen is needed based on whether it's sunny
     sunscreen = inp["is_sunny"]
-    top = None # Not set yet
+    
+    # Initializes the 'top' variable which will hold the appropriate clothing for the upper body
+    top = None
+    
+    # Determines the minimum temperature by comparing the minimum temperature and the 'feels like' temperature
     min_temp = min(inp["mintemp"], inp["minfeel"])
+    
+    # Determines the maximum temperature by comparing the maximum temperature and the 'feels like' temperature
     max_temp = max(inp["maxtemp"], inp["maxfeel"])
+    
+    # Determines the appropriate clothing based on the temperature range
     if min_temp > 15:
         if max_temp< 25:
             top = "T-Shirt"
@@ -144,7 +167,10 @@ def clothing(inp):
             top = "Long Sleeves + Jacket"
         else:
             top = "Long Sleeves"
+    
+    # Returns a dictionary containing the determined clothing and whether sunscreen and an umbrella are needed
     return {"top": top, "sunscreen": sunscreen, "umbrella": umbrella }
+
 
 # Function to query HuggingFace model
 def query_stable_diff(payload):
@@ -153,15 +179,26 @@ def query_stable_diff(payload):
 
 # Function to get location
 def get_location(address):
-        geocoder = OpenCageGeocode(key)
-        results = geocoder.geocode(address)
-        if results and len(results):
-        	lat = results[0]['geometry']['lat']
-        	lng = results[0]['geometry']['lng']
-        	st.write(f'Latitude: {lat}, Longitude: {lng}')
-        else:
-        	st.write('Location not found')
-       	return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
+    # Create a geocoder using OpenCageGeocode with the provided key
+    geocoder = OpenCageGeocode(key)
+    
+    # Use the geocoder to get the results of the geocoding of the address
+    results = geocoder.geocode(address)
+    
+    # If there are results and the results list is not empty
+    if results and len(results):
+        # Get the latitude and longitude from the first result
+        lat = results[0]['geometry']['lat']
+        lng = results[0]['geometry']['lng']
+        
+        # Write the latitude and longitude to the Streamlit app
+        st.write(f'Latitude: {lat}, Longitude: {lng}')
+    else:
+        # If no results were found, write that the location was not found
+        st.write('Location not found')
+    
+    # Return the JSON response of the forecast for the latitude and longitude
+    return st.json(consumeOne(fetchForecast(lat, lng, API_WEATHER)))
 
 
 
@@ -258,74 +295,137 @@ def get_random_resp(prompt):
 
   
 
+# Function to generate an image from a prompt
 def gen_image_from_arctic_prompt(prompt):
+    # Display the response of the prompt on the Streamlit app
     st.write(f"This is the response - {display_resp(prompt)}") 
+    
     try:
+        # Create a payload with the response of the prompt as inputs
         payload = {"inputs": display_resp(prompt) }
+        
+        # Query the stable difference function with the payload and get the image data
         image_data = query_stable_diff(payload)
+        
+        # Open the image data as an image
         image = Image.open(io.BytesIO(image_data))
+        
+        # Display the image on the Streamlit app with a caption
         st.image(image, caption="Generated Image")
     except Exception as e:
+        # If there is an error in generating the image, display the error on the Streamlit app
         st.error(f"Error generating image: {e}")
 
 
+# Function to generate an image from a prompt
 def address(options_r, options_g):
+    # Create a text input field in the Streamlit app for the user to enter an address
     address = st.text_input("Address:")
+    
+    # If the user clicks the 'Generate with Arctic' button
     if st.button('Generate with Arctic'):
-      weather = get_location(address)
-      st.write(f"Now Let's get you fitted up! This are the weather based outfits generated by the Artic Snowflake Instruct Model")
-      set_gen_image_load()
-      gen_image_from_arctic_prompt(arctic_gen(weather, options_r, options_g))
+        # Get the weather for the entered address
+        weather = get_location(address)
+        
+        # Display a message on the Streamlit app
+        st.write(f"Now Let's get you fitted up! These are the weather-based outfits generated by the Arctic Snowflake Instruct Model")
+        
+        # Call the function to set the image load
+        set_gen_image_load()
+        
+        # Generate an image from the Arctic prompt with the weather and the options
+        gen_image_from_arctic_prompt(arctic_gen(weather, options_r, options_g))
 
 	
+# Function to generate an image from a prompt
 def wardrobe(options_r, options_g):
+    # Create a text input field in the Streamlit app for the user to enter outfits
     text_prompt = st.text_input("Enter as many fits as you have for this weather in your wardrobe(separate each outfit with a comma):")
+    
+    # If the user clicks the 'Generate Image' button
     if st.button("Generate Image"):
-      if text_prompt:
-        get_fits = text_prompt.split(",")
-        count_list = len(get_fits)
-        model_input = ", ".join(get_fits)
-        prompt = f"Create {count_list} separate outfits for a {options_r} {options_g}  wearing {model_input}"
-        try:
-          payload = {"inputs": prompt}
-          image_data = query_stable_diff(payload)
-          image = Image.open(io.BytesIO(image_data))
-          st.image(image, caption="Generated Image")
-        except Exception as e:
-          st.error(f"Error generating image: {e}")
-      else:
-        st.warning("Please enter a description.")
+        # If the user has entered a description
+        if text_prompt:
+            # Split the entered outfits by commas
+            get_fits = text_prompt.split(",")
+            
+            # Count the number of outfits
+            count_list = len(get_fits)
+            
+            # Join the outfits with commas
+            model_input = ", ".join(get_fits)
+            
+            # Create a prompt for the model
+            prompt = f"Create {count_list} separate outfits for a {options_r} {options_g}  wearing {model_input}"
+            
+            try:
+                # Create a payload with the prompt as inputs
+                payload = {"inputs": prompt}
+                
+                # Query the stable difference function with the payload and get the image data
+                image_data = query_stable_diff(payload)
+                
+                # Open the image data as an image
+                image = Image.open(io.BytesIO(image_data))
+                
+                # Display the image on the Streamlit app with a caption
+                st.image(image, caption="Generated Image")
+            except Exception as e:
+                # If there is an error in generating the image, display the error on the Streamlit app
+                st.error(f"Error generating image: {e}")
+        else:
+            # If the user has not entered a description, display a warning
+            st.warning("Please enter a description.")
 
 
+# Function to generate captions for an image
 def image_captions(temp, top_p):
-  st.write("Captivating Captions: English Language Captions for Your Instagram worthy photos")
-  # st.write("Generate a Caption for Every Instagram Picture ")
-  uploaded_file = st.file_uploader("Generate a Caption for your Picture", type=["png", "jpg", "jpeg"])
-  if uploaded_file is not None:
-    data = base64.b64encode(uploaded_file.read()).decode('utf-8')
-    img = f"data:application/octet-stream;base64,{data}"
-    image = Image.open(uploaded_file)
-    if image.mode == 'RGBA':
-      image = image.convert('RGB')
-    st.image(image, caption="Uploaded Image", use_column_width=True)
-    out_blip = None
-    if st.button('Generate'):
-      out_blip = get_blip_output(img)
-      for event in replicate.stream(
-          "snowflake/snowflake-arctic-instruct",
-          input={
-              "top_k": 50,
-              "top_p": top_p,
-              "prompt": f" Write a creative caption about only the descriptions made here {out_blip} and do not use the word 'None' in any of your responses. ",
-              "temperature": temp,
-              "max_new_tokens": 512,
-              "min_new_tokens": 0,
-              "stop_sequences": "<|im_end|>",
-              "prompt_template": "<|im_start|>system\nYou're a helpful assistant<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n\n<|im_start|>assistant\n",
-              "presence_penalty": 1.15,
-              "frequency_penalty": 0.2
-          },
-      ):yield str(event)
+    # Display a title on the Streamlit app
+    st.write("Captivating Captions: English Language Captions for Your Instagram worthy photos")
+    
+    # Create a file uploader in the Streamlit app for the user to upload an image
+    uploaded_file = st.file_uploader("Generate a Caption for your Picture", type=["png", "jpg", "jpeg"])
+    
+    # If the user has uploaded a file
+    if uploaded_file is not None:
+        # Read the uploaded file and encode it in base64
+        data = base64.b64encode(uploaded_file.read()).decode('utf-8')
+        
+        # Create a data URL for the image
+        img = f"data:application/octet-stream;base64,{data}"
+        
+        # Open the uploaded file as an image
+        image = Image.open(uploaded_file)
+        
+        # If the image is in RGBA mode, convert it to RGB mode
+        if image.mode == 'RGBA':
+            image = image.convert('RGB')
+        
+        # Display the image on the Streamlit app with a caption
+        st.image(image, caption="Uploaded Image", use_column_width=True)
+        
+        # Initialize the output variable
+        out_blip = None
+        
+        # If the user clicks the 'Generate' button
+        if st.button('Generate'):
+            # Call the function to get the blip output for the image
+            out_blip = get_blip_output(img)
+            for event in replicate.stream(
+              "snowflake/snowflake-arctic-instruct",
+              input={
+                  "top_k": 50,
+                  "top_p": top_p,
+                  "prompt": f" Write a creative caption about only the descriptions made here {out_blip} and do not use the word 'None' in any of your responses. ",
+                  "temperature": temp,
+                  "max_new_tokens": 512,
+                  "min_new_tokens": 0,
+                  "stop_sequences": "<|im_end|>",
+                  "prompt_template": "<|im_start|>system\nYou're a helpful assistant<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n\n<|im_start|>assistant\n",
+                  "presence_penalty": 1.15,
+                  "frequency_penalty": 0.2
+              },
+          ):yield str(event)
 
 def display_resp(event):	    
 	
