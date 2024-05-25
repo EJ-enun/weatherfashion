@@ -427,19 +427,27 @@ def image_captions(temp, top_p):
               },
           ):yield str(event)
 
+# Function to display responses
 def display_resp(event):	    
-	
-        # Store LLM-generated responses
-        if "messages" not in st.session_state.keys():
-            st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research."}]
+    # If "messages" is not in the session state keys
+    if "messages" not in st.session_state.keys():
+        # Initialize "messages" in the session state with a welcome message
+        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research."}]
 
-        # Display or clear chat messages
-       
-        for message in st.session_state.messages:
-          with st.chat_message(message["role"]):
+    # For each message in the session state messages
+    for message in st.session_state.messages:
+        # Create a chat message with the role of the message
+        with st.chat_message(message["role"]):
+            # Write the event to the Streamlit app and store the full response
             full_response = st.write_stream(event)
+            
+            # Update the session state messages with the full response
             st.session_state.messages = [{"role": "assistant", "content":full_response}]
+            
+            # Write the content of the message to the Streamlit app
             st.write(message["content"])
+            
+            # Return the content of the message
             return message["content"]
 
 
@@ -448,31 +456,65 @@ def display_resp(event):
 def reset_app():
   http = "https://weatherfashion.streamlit.app/"
   return webbrowser.open_new_tab(http)
+# Function to add dropdowns to the Streamlit app
 def add_dropdowns():
-  race_options = ["Asian", "Black", "Biracial",  "White"]
-  gender_options = ["Male", "Female", "Non-binary"]
-  gender_selected_option = st.multiselect("Choose Gender:", gender_options)
-  race_selected_option = st.selectbox('Select an option:', race_options)
-  return [race_selected_option, gender_selected_option]
+    # Define the race and gender options
+    race_options = ["Asian", "Black", "Biracial",  "White"]
+    gender_options = ["Male", "Female", "Non-binary"]
+    
+    # Add a multiselect for the user to choose a gender
+    gender_selected_option = st.multiselect("Choose Gender:", gender_options)
+    
+    # Add a selectbox for the user to choose a race
+    race_selected_option = st.selectbox('Select an option:', race_options)
+    
+    # Return the selected race and gender options
+    return [race_selected_option, gender_selected_option]
+# Main function
 def main():
-  st.title('MeteoroloChic')
-  st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
-  st.sidebar.button('Reset App', on_click=clear_chat_history)
-  #st.subheader("Adjust Photo Caption model parameters")
-  temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
-  top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-  st.sidebar.caption('Built by Enun Jay at www.devpost.com/enunenun21')
-  set_logo()
-  set_background_color('#fffbec')
-  race_options = ["Asian", "Black", "Biracial",  "White"]
-  gender_options = ["Male", "Female", "Non-binary"]
-  gender_selected_option = st.multiselect("Choose Gender:", gender_options)
-  race_selected_option = st.selectbox('Choose Race:', race_options)
-  get_replicate_api_token()
-  address(race_selected_option,gender_selected_option)
-  wardrobe(race_selected_option, gender_selected_option)
-  display_resp(image_captions(temperature, top_p))
-  #stored_caption = store_caption(image_captions(temperature, top_p))
+    # Set the title of the Streamlit app
+    st.title('MeteoroloChic')
+    
+    # Write a description on the Streamlit app
+    st.write("Where Climate Meets Style! Dressing You Right for Every Climate.")
+    
+    # Add a button to the sidebar to reset the app
+    st.sidebar.button('Reset App', on_click=clear_chat_history)
+    
+    # Add sliders to the sidebar to adjust the temperature and top_p parameters
+    temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
+    top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
+    
+    # Add a caption to the sidebar
+    st.sidebar.caption('Built by Enun Jay at www.devpost.com/enunenun21')
+    
+    # Call the function to set the logo
+    set_logo()
+    
+    # Call the function to set the background color
+    set_background_color('#fffbec')
+    
+    # Define the race and gender options
+    race_options = ["Asian", "Black", "Biracial",  "White"]
+    gender_options = ["Male", "Female", "Non-binary"]
+    
+    # Add a multiselect for the user to choose a gender
+    gender_selected_option = st.multiselect("Choose Gender:", gender_options)
+    
+    # Add a selectbox for the user to choose a race
+    race_selected_option = st.selectbox('Choose Race:', race_options)
+    
+    # Call the function to get the Replicate API token
+    get_replicate_api_token()
+    
+    # Call the function to get the address
+    address(race_selected_option,gender_selected_option)
+    
+    # Call the function to get the wardrobe
+    wardrobe(race_selected_option, gender_selected_option)
+    
+    # Call the function to display the response of the image captions
+    display_resp(image_captions(temperature, top_p))
 #  show_caption(stored_caption)
 if __name__ == "__main__":
     main()
