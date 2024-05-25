@@ -238,7 +238,7 @@ def get_random_resp(prompt):
   
 
 def gen_image_from_arctic_prompt(prompt):
-   
+    st.write(f"This is the response - {display_resp(prompt)}") 
     try:
         payload = {"inputs": display_resp(prompt) }
         image_data = query_stable_diff(payload)
@@ -318,7 +318,7 @@ def display_resp(event):
           with st.chat_message(message["role"]):
             full_response = st.write_stream(event)
             st.session_state.messages = [{"role": "assistant", "content":full_response}]
-            st.write(f"This is the response - { full_response }") 
+            st.write(message["content"])
             return message["content"]
 
 
@@ -346,7 +346,7 @@ def main():
   race_options = ["Asian", "Black", "Biracial",  "White"]
   gender_options = ["Male", "Female", "Non-binary"]
   gender_selected_option = st.multiselect("Choose Gender:", gender_options)
-  race_selected_option = st.selectbox('Choose Race:', race_options)
+  race_selected_option = st.selectbox('Select an option:', race_options)
   get_replicate_api_token()
   address(race_selected_option,gender_selected_option)
   wardrobe(race_selected_option, gender_selected_option)
