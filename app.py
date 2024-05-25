@@ -346,7 +346,7 @@ def main():
   race_options = ["Asian", "Black", "Biracial",  "White"]
   gender_options = ["Male", "Female", "Non-binary"]
   gender_selected_option = st.multiselect("Choose Gender:", gender_options)
-  race_selected_option = st.selectbox('Select an option:', race_options)
+  race_selected_option = st.selectbox('Choose Race:', race_options)
   get_replicate_api_token()
   address(race_selected_option,gender_selected_option)
   wardrobe(race_selected_option, gender_selected_option)
