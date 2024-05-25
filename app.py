@@ -62,31 +62,42 @@ def fetchForecast(lat, lon, apikey):
 
 # Function to get precipitation type
 def get_precipitation_type(condition_text):
+    # Check if the condition text contains "Rain"
     if "Rain" in condition_text["condition_text"]:
-        return "Rain"
+        return "Rain"  # Return "Rain" if true
+    # Check if the condition text contains "Snow"
     elif "Snow" in condition_text["condition_text"]:
-        return "Snow"
+        return "Snow"  # Return "Snow" if true
+    # Check if the condition text contains "Sunny"
     elif "Sunny" in condition_text["condition_text"]:
-        return "Sunny"
+        return "Sunny"  # Return "Sunny" if true
+    # Check if the condition text contains "Clear"
     elif "Clear" in condition_text["condition_text"]:
-        return "Clear"
+        return "Clear"  # Return "Clear" if true
+    # Check if the condition text contains "Partly cloudy"
     elif "Partly cloudy" in condition_text["condition_text"]:
-        return "Partly Cloudy"
+        return "Partly Cloudy"  # Return "Partly Cloudy" if true
+    # Check if the condition text contains "Overcast"
     elif "Overcast" in condition_text["condition_text"]:
-        return "Overcast"
+        return "Overcast"  # Return "Overcast" if true
     else:
-        return "Unknown"
+        return "Unknown"  # If none of the above conditions are met, return "Unknown"
+
 
 # Function to set background color
 def set_background_color(color):
+    # Define a string that contains CSS to change the background color
     background_color = f'''
     <style>
-    .stApp {{
-        background-color: {color};
+    .stApp {{  # Target the Streamlit application
+        background-color: {color};  # Set the background color
     }}
     </style>
     '''
+    # Use Streamlit's markdown method to apply the CSS
+    # The 'unsafe_allow_html=True' argument allows the use of HTML in the markdown
     st.markdown(background_color, unsafe_allow_html=True)
+
 
 # Function to set logo
 def set_logo():
