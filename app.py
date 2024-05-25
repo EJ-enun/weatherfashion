@@ -238,7 +238,7 @@ def get_random_resp(prompt):
   
 
 def gen_image_from_arctic_prompt(prompt):
-    st.write(f"This is the response - {display_resp(prompt)}") 
+   
     try:
         payload = {"inputs": display_resp(prompt) }
         image_data = query_stable_diff(payload)
@@ -318,7 +318,7 @@ def display_resp(event):
           with st.chat_message(message["role"]):
             full_response = st.write_stream(event)
             st.session_state.messages = [{"role": "assistant", "content":full_response}]
-            st.write(message["content"])
+             st.write(f"This is the response - {display_resp(prompt)}") 
             return message["content"]
 
 
