@@ -381,7 +381,7 @@ def wardrobe(options_r, options_g):
 #Function to copy text.
 def copy(text):
         #col_spacer, col_copy, col_push = st.columns([0.5, 0.3, 0.2])
-        with col_copy:
+        #with col_copy:
             copy_to_clipboard = st.button(label="Copy to clipboard :clipboard:")
             if copy_to_clipboard:
                 try:
