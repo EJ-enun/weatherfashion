@@ -380,11 +380,7 @@ def wardrobe(options_r, options_g):
 
 # Function to copy text to clipboard
 def copy(text):
-    # Create three columns with specified widths
-    col_spacer, col_copy, col_push = st.columns([0.3, 0.3, 0.2])
-    
-    # In the second column
-    with col_copy:
+   
         # Create a button labeled "Copy to clipboard"
         copy_to_clipboard = st.button(label="Copy to clipboard :clipboard:")
         
@@ -469,7 +465,7 @@ def display_resp(event):
 		
 		
             #Copy the text
-            copy(message["content"])
+            copy(full_response)
 		
             # Return the content of the message
             return message["content"]
