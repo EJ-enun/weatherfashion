@@ -377,6 +377,16 @@ def wardrobe(options_r, options_g):
             # If the user has not entered a description, display a warning
             st.warning("Please enter a description.")
 
+#Function to copy text.
+def copy(text):
+        #col_spacer, col_copy, col_push = st.columns([0.5, 0.3, 0.2])
+        with col_copy:
+            copy_to_clipboard = st.button(label="Copy to clipboard :clipboard:")
+            if copy_to_clipboard:
+                try:
+                    pyperclip.copy(text)
+                except pyperclip.PyperclipException:
+                    st.warning("Copy Exception Thrown")
 
 # Function to generate captions for an image
 def image_captions(temp, top_p):
@@ -446,7 +456,10 @@ def display_resp(event):
             
             # Write the content of the message to the Streamlit app
             st.write(message["content"])
-            
+		
+            #Copy the text
+	    copy(message["content"])
+		
             # Return the content of the message
             return message["content"]
 
