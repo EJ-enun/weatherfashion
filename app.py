@@ -12,6 +12,7 @@ import os
 import tempfile
 import webbrowser
 import random
+import pyperclip
 
 # API keys and tokens are defined
 REPLICATE_API_TOKEN='r8_70DiHD1crmyex93p560AlTEP8YLzSjR1AupYr'
