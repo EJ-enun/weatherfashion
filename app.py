@@ -458,8 +458,9 @@ def display_resp(event):
             # Write the content of the message to the Streamlit app
             st.write(message["content"])
 		
+		
             #Copy the text
-	    copy(message["content"])
+            copy(message["content"])
 		
             # Return the content of the message
             return message["content"]
