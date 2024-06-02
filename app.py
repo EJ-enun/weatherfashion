@@ -464,8 +464,7 @@ def display_resp(event):
             st.write(message["content"])
 		
 		
-            #Copy the text
-            copy(full_response)
+        
 		
             # Return the content of the message
             return message["content"]
