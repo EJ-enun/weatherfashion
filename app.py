@@ -521,7 +521,7 @@ def main():
     gender_selected_option = st.multiselect("Choose Gender:", gender_options)
     
     # Add a selectbox for the user to choose a race
-    race_selected_option = st.selectbox('Choose Race:', race_options)
+    race_selected_option = st.multiselect('Choose Race:', race_options)
     
     # Call the function to get the Replicate API token
     get_replicate_api_token()
