@@ -518,10 +518,10 @@ def main():
     gender_options = ["Male", "Female", "Non-binary"]
     
     # Add a multiselect for the user to choose a gender
-    gender_selected_option = st.multiselect("Choose Gender:", gender_options)
+    gender_selected_option = st.multiselect("Choose Gender(Optional):", gender_options)
     
     # Add a selectbox for the user to choose a race
-    race_selected_option = st.multiselect('Choose Race:', race_options)
+    race_selected_option = st.multiselect('Choose Race(Optional):', race_options)
     
     # Call the function to get the Replicate API token
     get_replicate_api_token()
